@@ -18,7 +18,7 @@ module.exports = {
 
       await strapi.db.query('plugin::users-permissions.user').update({
         where: { email },
-        data: { otp_code: otp, otp_expiry: otpExpiry },
+        data: { otp_code: otp, otp_expiry: otpExpiry, s_verified: false },
       });
 
       ctx.send({ message: 'OTP sent successfully' });
