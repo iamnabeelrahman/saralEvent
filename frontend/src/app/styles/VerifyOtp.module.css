@@ -1,0 +1,79 @@
+/* src/styles/VerifyOtp.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    padding: 20px;
+  }
+  
+  .card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .prompt {
+    color: #444;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0 20px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  
+  .button {
+    padding: 12px 0;
+    font-size: 16px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+  }
+  
+  .animationContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .greenTick {
+    font-size: 50px;
+    color: green;
+    margin-bottom: 10px;
+  }
+  
+  .redCross {
+    font-size: 50px;
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  .successMessage,
+  .failureMessage {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+  }
+  
