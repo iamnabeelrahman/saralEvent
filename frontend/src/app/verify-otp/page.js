@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import styles from "../../styles/VerifyOtp.module.css";
+import styles from "../styles/VerifyOtp.module.css";
 
 export default function VerifyOtp({ searchParams }) {
   const [otp, setOtp] = useState("");
