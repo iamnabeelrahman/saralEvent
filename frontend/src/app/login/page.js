@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 import LoginForm from "../components/LoginForm";
-import styles from "../../styles/Login.module.css";
+import styles from "../styles/Login.module.css";
 
 export default function LoginPage() {
   const [user, setUser] = useState(null);
