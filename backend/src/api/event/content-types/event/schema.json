@@ -12,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Event_Id": {
-      "type": "integer"
-    },
     "Event_Name": {
       "type": "string"
     },
@@ -29,8 +26,8 @@
     },
     "Display_Picture": {
       "type": "media",
-      "multiple": false,
-      "required": false,
+      "multiple": true,
+      "required": true,
       "allowedTypes": [
         "images"
       ]
@@ -40,6 +37,27 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "events"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "Event"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "Event_Name",
+      "required": true
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "Event_Id": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
