@@ -15,7 +15,7 @@ module.exports = ({ env }) => ({
         defaultFrom: env('GMAIL_USER'),
         defaultReplyTo: env('GMAIL_USER'),
       },
-    },
+    }, 
   },
 
   upload: {
