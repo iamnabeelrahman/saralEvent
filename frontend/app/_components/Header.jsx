@@ -17,6 +17,8 @@ import GlobalApi from "../_utils/GlobalApi";
 function Header() {
   const [categoryList, setCategoryList] = useState([]);
 
+  const isSignedIn=sessionStorage.getItem('jwt')?true:false
+
   useEffect(() => {
     getCategoryList();
   }, []);
@@ -87,7 +89,8 @@ function Header() {
           />
           0
         </h2>
-       <Link href={'/sign-in'}><Button className="w-10 md:w-[70px]">Login</Button> </Link>       </div>
+     {!isSignedIn && <Link href={'/sign-in'}><Button className="w-10 md:w-[70px]">Login</Button> </Link> }
+      </div>
     </div>
   );
 }
