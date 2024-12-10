@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: false,
     images:{
-        domains:['localhost', 't4.ftcdn.net']
+        domains:['localhost', 't4.ftcdn.net', 'saralevent-backend.onrender.com']
     }
 };
 
