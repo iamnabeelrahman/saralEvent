@@ -87,8 +87,7 @@ function Header() {
           />
           0
         </h2>
-        <Button className="w-10 md:w-[70px]">Login</Button>
-      </div>
+       <Link href={'/sign-in'}><Button className="w-10 md:w-[70px]">Login</Button> </Link>       </div>
     </div>
   );
 }
