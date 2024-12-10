@@ -31,7 +31,7 @@ function page() {
     );
   };
 
-  const jwt = sessionStorage.getItem("jwt");
+
 
   useEffect(() => {
     // Ensure sessionStorage is accessed on the client side
