@@ -90,7 +90,7 @@ function Header() {
     console.log(documentId);    
     GlobalApi.deleteListItem(documentId, jwt)
       .then((res) => {
-        // Optimistically remove the deleted item
+        // removing the deleted item
         console.log("Deleted response:", res);  
         setListItemDetails((prevDetails) =>
           prevDetails.filter((item) => item.documentId !== documentId)
