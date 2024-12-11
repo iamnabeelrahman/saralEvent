@@ -101,6 +101,12 @@
       },
       "type": "integer",
       "default": 1
+    },
+    "user_carts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::user-cart.user-cart",
+      "mappedBy": "events"
     }
   }
 }

@@ -20,7 +20,7 @@ function CategoryList({ categoryList }) {
             <Image
               src={
                 category?.icon?.url
-                  ? process.env.NEXT_PUBLIC_BACKEND_BASE_URL + category.icon.url
+                  ?category.icon.url
                   : "https://t4.ftcdn.net/jpg/08/49/36/01/360_F_849360193_JguSdX5IYrE9skrUYqsnix3eNj38D5Vq.jpg"
               }
               alt="category icon"

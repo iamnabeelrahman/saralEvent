@@ -11,6 +11,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 function Slider({ sliderList }) {
+  console.log(sliderList );
+  
   return (
     <div className="relative w-full">
       {/* Carousel Content with Images */}
@@ -19,7 +21,7 @@ function Slider({ sliderList }) {
           {sliderList.map((slider, index) => (
             <CarouselItem key={index} className="flex justify-center items-center">
               <Image
-                src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + slider.image[0].url}
+                src={slider.image[0].url}
                 alt={`Slider photo`}
                 width={800}
                 height={400}

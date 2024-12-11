@@ -14,6 +14,7 @@
   "dependencies": {
     "@strapi/plugin-cloud": "5.0.0",
     "@strapi/plugin-users-permissions": "5.0.0",
+    "@strapi/provider-upload-cloudinary": "^5.5.1",
     "@strapi/strapi": "5.0.0",
     "axios": "^1.7.9",
     "fs-extra": "^10.0.0",

@@ -1,14 +1,21 @@
 module.exports = [
   'strapi::logger',
   'strapi::errors',
-  'strapi::security',
   {
-    name: 'strapi::cors',
+    name: 'strapi::security',
     config: {
-      origin: '*', // Allow requests from all origins
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'], // Allowed HTTP methods
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'connect-src': ["'self'", 'https:'],
+          'img-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
+          'media-src': ["'self'", 'data:', 'blob:', 'res.cloudinary.com'],
+          upgradeInsecureRequests: null,
+        },
+      },
     },
   },
+  'strapi::cors',
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',

@@ -12,7 +12,7 @@ import {
 import EventDetails from "./EventDetails";
 
 function EventCard({ event }) {
-  const imageUrl = event.images[0].url;
+  const imageUrl = event.images[0]?.url;
   // console.log("ievent data: ", event.categories[0].name);
 
   return (
@@ -24,7 +24,7 @@ function EventCard({ event }) {
       <Image
         src={
           imageUrl
-            ? `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}${event.images[0].url}`
+            ? `${event.images[0]?.url}`
             : "https://t4.ftcdn.net/jpg/08/49/36/01/360_F_849360193_JguSdX5IYrE9skrUYqsnix3eNj38D5Vq.jpg"
         }
         alt={"Event image"}

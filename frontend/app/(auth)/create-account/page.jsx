@@ -2,6 +2,7 @@
 import GlobalApi from "@/app/_utils/GlobalApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoaderIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -12,9 +13,11 @@ function page() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isJWT, setIsJWT] = useState(false);
+  const [loader, setLoader] = useState()
   const router = useRouter();
 
   const onCreateAccount = () => {
+    setLoader(true)
     GlobalApi.createUser(username, email, password).then(
       (res) => {
         console.log(res.data.user);
@@ -24,9 +27,14 @@ function page() {
         toast("Account created succesfully");
 
         router.push("/");
+        setLoader(false)
+
       },
       (e) => {
-        toast("Error while creating account!");
+        console.log(e);
+        toast(e?.response?.data?.error?.message);
+        setLoader(false)
+
       }
     );
   };
@@ -76,7 +84,7 @@ function page() {
               onClick={() => onCreateAccount()}
               disabled={!(username && email && password)}
             >
-              Create an Account
+             {loader?  <LoaderIcon className="animate-spin"/>  : 'Creant an Account' }
             </Button>
 
             <p>

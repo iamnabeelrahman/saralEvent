@@ -6,32 +6,15 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Loader2Icon, LoaderCircle, LoaderCircleIcon, LoaderIcon, LoaderPinwheelIcon } from "lucide-react";
 
 function page() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [isJWT, setIsJWT] = useState(false);
+  const [loader, setLoader] = useState()
   const router = useRouter();
-
-  const onSignIn = () => {
-    GlobalApi.SignIn(email, password).then(
-      (res) => {
-        // console.log(res.data.user);
-        // console.log(res.data.jwt);
-        sessionStorage.setItem("user", JSON.stringify(res.data.user));
-        sessionStorage.setItem("jwt", res.data.jwt);
-        toast("Login succesfully");
-        router.push("/");
-      },
-      (e) => {
-        console.log(e);
-        toast("Server Error!");
-      }
-    );
-  };
-
-
 
   useEffect(() => {
     // Ensure sessionStorage is accessed on the client side
@@ -42,6 +25,27 @@ function page() {
       }
     }
   }, []);
+
+  const onSignIn = () => {
+    setLoader(true)
+    GlobalApi.SignIn(email, password).then(
+      (res) => {
+        // console.log(res.data.user);
+        // console.log(res.data.jwt);
+        sessionStorage.setItem("user", JSON.stringify(res.data.user));
+        sessionStorage.setItem("jwt", res.data.jwt);
+        toast("Login succesfully");
+        router.push("/");
+        setLoader(false)
+      },
+      (e) => {
+        console.log(e);
+        toast(e?.response?.data?.error?.message);
+        setLoader(false)
+      }
+    );
+  };
+
 
   if (!isJWT) {
     return (
@@ -70,7 +74,7 @@ function page() {
             />
 
             <Button onClick={() => onSignIn()} disabled={!(email && password)}>
-              SIgn In
+            {loader?  <LoaderIcon className="animate-spin"/>  : 'Sign-in' }
             </Button>
 
             <p>
