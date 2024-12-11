@@ -17,8 +17,18 @@ import GlobalApi from "../_utils/GlobalApi";
 function Header() {
   const [categoryList, setCategoryList] = useState([]);
 
-  const isSignedIn=sessionStorage.getItem('jwt')?true:false
+  const [isSignedIn, setIsSignedIn] = useState(false)
 
+    useEffect(() => {
+    // Ensure sessionStorage is accessed on the client side
+    if (typeof window !== "undefined") {
+      const jwt = sessionStorage.getItem("jwt");
+      if (jwt) {
+        setIsSignedIn(true);
+      }
+    }
+  }, []);
+  
   useEffect(() => {
     getCategoryList();
   }, []);
@@ -28,7 +38,7 @@ function Header() {
    */
   const getCategoryList = () => {
     GlobalApi.getCategory().then((res) => {
-      console.log("CatehoryList rep: ", res.data.data);
+  //    console.log("CatehoryList rep: ", res.data.data);
       setCategoryList(res.data.data);
     });
   };
