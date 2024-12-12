@@ -28,7 +28,7 @@ function EventDetails({ event }) {
 
   const addToList = () => {
     setLoading(true);
-    if (!jwt || !user?.id) {
+    if (!jwt || !user?.id || jwt === null) {
       alert("Please Sign In");
       router.push("/sign-in");
       setLoading(false);
@@ -51,8 +51,8 @@ function EventDetails({ event }) {
         setUpdateList(!updateList);
         setLoading(false);
       },
-      () => {
-        toast("Error while adding to cart");
+      (error) => {
+        toast("Error while adding to cart", error);
         setLoading(false);
       }
     );

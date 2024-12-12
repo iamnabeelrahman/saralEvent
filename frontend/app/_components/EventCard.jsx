@@ -12,7 +12,9 @@ import {
 import EventDetails from "./EventDetails";
 
 function EventCard({ event }) {
-  const imageUrl = event.images[0]?.url;
+  console.log("event data: ", event);
+  
+  const imageUrl = event.images?.[0].url;
   // console.log("ievent data: ", event.categories[0].name);
 
   return (

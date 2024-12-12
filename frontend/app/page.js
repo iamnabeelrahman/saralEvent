@@ -8,7 +8,7 @@ import Footer from "./_components/Footer";
 
 export default async function Home() {
   const sliderList = await GlobalApi.getSlider();
-  // console.log(sliderList);
+  console.log("slider lists data ;", sliderList);
 
   const categoryList = await GlobalApi.getCategoryList();
   const eventList = await GlobalApi.getAllEvent();

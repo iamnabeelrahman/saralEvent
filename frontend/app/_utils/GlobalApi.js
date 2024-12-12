@@ -70,19 +70,17 @@ const getListItems = (userId, jwt) =>
         image: item?.events[0].images[0].url,
         actualPrice: item?.events[0].price,
         id: item?.id,
-        documentId: item.documentId
+        documentId: item.documentId,
       }));
       return listItems;
     });
 
-    const deleteListItem = (documentId, jwt) =>
-        axiosClient.delete(`/user-carts/${documentId}`, {
-          headers: {
-            Authorization: "Bearer " + jwt,   
-          },
-        });
-
-  
+const deleteListItem = (documentId, jwt) =>
+  axiosClient.delete(`/user-carts/${documentId}`, {
+    headers: {
+      Authorization: "Bearer " + jwt,
+    },
+  });
 
 export default {
   getCategory,
@@ -94,5 +92,5 @@ export default {
   SignIn,
   addToList,
   getListItems,
-  deleteListItem
+  deleteListItem,
 };
