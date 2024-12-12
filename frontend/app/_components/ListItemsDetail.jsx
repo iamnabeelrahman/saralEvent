@@ -2,63 +2,60 @@ import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import GlobalApi from "../_utils/GlobalApi";
 
-function ListItemsDetail({ listItemDetails = [], onDeleteItem }) {
+function ListItemsDetail({ listItemDetails, onDeleteItem }) {
   const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
     let total = 0;
     listItemDetails.forEach((element) => {
-      total += element.amount || 0; // Ensure amount is valid
+      total += element.amount;
     });
     setSubtotal(total.toFixed(2));
   }, [listItemDetails]);
 
   return (
-    <div className="relative">
-      {listItemDetails.length === 0 ? (
-        <div className="text-center">
-          <h2 className="text-xl font-bold mb-4">Your list is empty!</h2>
-          <p className="text-gray-500">Add some events to see them here.</p>
-        </div>
-      ) : (
-        <div>
-          {listItemDetails.map((list, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center p-2 mb-2 border rounded-md shadow-sm"
-            >
-              <div className="flex gap-6 items-center">
-                <Image
-                  src={list.image || "/default-image.jpg"} // Fallback image
-                  width={70}
-                  height={70}
-                  alt={list.eventName || "Event"}
-                  className="border p-2"
-                />
-                <div>
-                  <h2 className="font-bold">{list.eventName || "Unknown Event"}</h2>
-                  <h2>Quantity: {list.quanity || 1}</h2>
-                  <h2 className="text-lg font-bold">Amount: ${list.amount || 0}</h2>
-                </div>
+    <div className="container mx-auto p-4 space-y-4">
+      <div>
+        {listItemDetails.map((list, index) => (
+          <div
+            key={index}
+            className="flex flex-col sm:flex-row justify-between items-center p-4 mb-4 border rounded-md shadow-md bg-white"
+          >
+            <div className="flex gap-4 items-center w-full sm:w-auto">
+              <Image
+                src={list.image}
+                width={70}
+                height={70}
+                alt={list.eventName}
+                className="border p-2 rounded-md"
+              />
+              <div className="flex-1">
+                <h2 className="font-bold text-lg">{list.name}</h2>
+                <p className="text-sm text-gray-600">Quantity: {list.quantity}</p>
+                <p className="text-md font-semibold text-gray-800">
+                  Amount: ${list.amount}
+                </p>
               </div>
-              <button onClick={() => onDeleteItem(list.documentId)}>
-                <TrashIcon className="text-red-500" />
-              </button>
             </div>
-          ))}
-        </div>
-      )}
+            <button
+              onClick={() => onDeleteItem(list.documentId)}
+              className="mt-2 sm:mt-0 p-2 text-red-600 hover:text-red-800"
+            >
+              <TrashIcon className="h-6 w-6" />
+            </button>
+          </div>
+        ))}
+      </div>
 
-      {listItemDetails.length > 0 && (
-        <div className="absolute w-[90%] bottom-6 flex flex-col">
-          <h2 className="text-lg font-bold flex justify-between">
-            Subtotal <span>${subtotal}</span>
-          </h2>
-          <Button>View Cart</Button>
-        </div>
-      )}
+      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] flex flex-col bg-white p-4 rounded-md shadow-lg">
+        <h2 className="text-lg font-bold flex justify-between items-center mb-2">
+          Subtotal: <span>${subtotal}</span>
+        </h2>
+        <Button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+          View Cart
+        </Button>
+      </div>
     </div>
   );
 }
