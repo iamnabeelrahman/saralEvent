@@ -1,60 +1,50 @@
 import { Button } from "@/components/ui/button";
-import { TrashIcon } from "lucide-react";
+import { DeleteIcon, Trash2Icon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import GlobalApi from "../_utils/GlobalApi";
 
 function ListItemsDetail({ listItemDetails, onDeleteItem }) {
   const [subtotal, setSubtotal] = useState(0);
-
   useEffect(() => {
     let total = 0;
     listItemDetails.forEach((element) => {
-      total += element.amount;
+      total = total + element.amount;
     });
     setSubtotal(total.toFixed(2));
   }, [listItemDetails]);
 
   return (
-    <div className="container mx-auto p-4 space-y-4">
+    <div>
       <div>
         {listItemDetails.map((list, index) => (
-          <div
-            key={index}
-            className="flex flex-col sm:flex-row justify-between items-center p-4 mb-4 border rounded-md shadow-md bg-white"
-          >
-            <div className="flex gap-4 items-center w-full sm:w-auto">
+          <div className="flex justify-between items-center p-2 mb-2">
+            <div className="flex gap-6 items-center">
               <Image
                 src={list.image}
                 width={70}
                 height={70}
                 alt={list.eventName}
-                className="border p-2 rounded-md"
+                className="border p-2"
               />
-              <div className="flex-1">
-                <h2 className="font-bold text-lg">{list.name}</h2>
-                <p className="text-sm text-gray-600">Quantity: {list.quantity}</p>
-                <p className="text-md font-semibold text-gray-800">
-                  Amount: ${list.amount}
-                </p>
+              <div>
+                <h2 className="font-bold">{list.name}</h2>
+                <h2>Quanity {list.quanity}</h2>
+                <h2 className="text-lg font-bold">Amount {list.amount}</h2>
               </div>
             </div>
-            <button
-              onClick={() => onDeleteItem(list.documentId)}
-              className="mt-2 sm:mt-0 p-2 text-red-600 hover:text-red-800"
-            >
-              <TrashIcon className="h-6 w-6" />
+            <button onClick={() => onDeleteItem(list.documentId)}>
+              <TrashIcon />
             </button>
           </div>
         ))}
       </div>
 
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-[90%] flex flex-col bg-white p-4 rounded-md shadow-lg">
-        <h2 className="text-lg font-bold flex justify-between items-center mb-2">
-          Subtotal: <span>${subtotal}</span>
+      <div className="absolute w-[90%] bottom-6 flex flex-col">
+        <h2 className="text-lg font-bold flex justify-between">
+          Subtotal <span>{subtotal}</span>
         </h2>
-        <Button className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
-          View Cart
-        </Button>
+        <Button>View Cart</Button>
       </div>
     </div>
   );
