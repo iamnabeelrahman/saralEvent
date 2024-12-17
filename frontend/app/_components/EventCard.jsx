@@ -12,7 +12,7 @@ import {
 import EventDetails from "./EventDetails";
 
 function EventCard({ event }) {
-  console.log("event data: ", event);
+  // console.log("event data: ", event);
   
   const imageUrl = event.images?.[0].url;
   // console.log("ievent data: ", event.categories[0].name);
@@ -52,13 +52,15 @@ function EventCard({ event }) {
           <DialogHeader>
             <DialogTitle className='text-2xl font-bold'>{event.name}</DialogTitle>
             <DialogDescription>
-            <h2 className="text-primary">{event.categories[0]?.name}</h2>
+            <h2 className="text-primary">{event.categories?.name}</h2>
 
             <EventDetails event={event}/>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+     
     </div>
   );
 }

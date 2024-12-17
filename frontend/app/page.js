@@ -13,7 +13,9 @@ export default async function Home() {
   const categoryList = await GlobalApi.getCategoryList();
   const eventList = await GlobalApi.getAllEvent();
 
-  // console.log(eventList);
+  console.log("event list data: ", eventList);
+  console.log("event list documtdata: ", eventList);
+
 
   return (
     <>

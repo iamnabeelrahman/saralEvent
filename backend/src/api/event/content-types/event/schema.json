@@ -8,49 +8,22 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "name": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "type": "string",
-      "required": true,
-      "default": "please write event name"
-    },
-    "description": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "text",
-      "required": true,
-      "default": "description of event"
-    },
-    "price": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "decimal",
       "required": true
     },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "price": {
+      "type": "decimal"
+    },
     "slug": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
       "type": "uid",
       "targetField": "name"
     },
@@ -62,51 +35,22 @@
         "images",
         "files",
         "videos"
-      ],
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      ]
     },
-    "categories": {
+    "category": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::category.category",
       "inversedBy": "events"
     },
-    "ticketType": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "enumeration",
-      "enum": [
-        "General",
-        "VIP",
-        "Early bird",
-        "Reserved",
-        "Giveaways",
-        "Members-only",
-        "Virtual pass"
-      ],
-      "default": "General"
-    },
     "ticketQuantity": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "integer",
-      "default": 1
+      "type": "integer"
     },
     "user_carts": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::user-cart.user-cart",
-      "mappedBy": "events"
+      "inversedBy": "events"
     }
   }
 }

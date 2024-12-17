@@ -1,8 +1,9 @@
 const { default: axios } = require("axios");
 
 const axiosClient = axios.create({
-  baseURL: "https://saralevent-backend.onrender.com/api",
+  baseURL: "http://localhost:1337/api",
 });
+
 
 const getCategory = () => axiosClient.get("/categories?populate=*");
 
@@ -60,11 +61,13 @@ const getListItems = (userId, jwt) =>
     )
     .then((res) => {
       const data = res.data.data;
+      // console.log("get list item data: ",data);
+      
       const listItems = data.map((item, index) => ({
         // Access the first event in the events array and its name
         // event: item.events[0], // Assuming there is at least one event
         // Now access the name of the event and the URL of its first image (if exists)
-        eventName: item?.events[0].name,
+        eventName: item?.events?.[0]?.name,
         quanity: item?.Quantity,
         amount: item?.amount,
         image: item?.events[0].images[0].url,
@@ -94,3 +97,4 @@ export default {
   getListItems,
   deleteListItem,
 };
+

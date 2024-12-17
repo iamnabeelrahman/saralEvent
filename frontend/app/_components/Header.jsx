@@ -76,7 +76,7 @@ function Header() {
   const getListItems = async () => {
     if (!user || !jwt) return;
     const listItems_ = await GlobalApi.getListItems(user.id, jwt);
-    console.log("list item dertails: ", listItems_);
+    // console.log("list item dertails: ", listItems_);
     setTotalListItem(listItems_?.length);
     setListItemDetails(listItems_);
   };
@@ -87,11 +87,11 @@ function Header() {
   };
 
   const onDeleteItem = (documentId) => {
-    console.log(documentId);    
+    // console.log(documentId);    
     GlobalApi.deleteListItem(documentId, jwt)
       .then((res) => {
         // removing the deleted item
-        console.log("Deleted response:", res);  
+        // console.log("Deleted response:", res);  
         setListItemDetails((prevDetails) =>
           prevDetails.filter((item) => item.documentId !== documentId)
         );

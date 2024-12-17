@@ -14,7 +14,7 @@ function CategoryList({ categoryList }) {
         {categoryList.map((category, index) => (
           <Link
             href={"/events-category/" + category.name}
-            key={category.id}
+            key={index}
             className="flex flex-col items-center bg-gray-200 gap-2 p-4 h-[90px] cursor-pointer rounded-lg group hover:bg-[#6B46C1] hover:text-gray-200 transition-colors duration-300 w-[120px] sm:w-[150px] md:w-[180px] min-w-[100px] object-contain"
           >
             <Image

@@ -18,7 +18,7 @@ function ListItemsDetail({ listItemDetails, onDeleteItem }) {
     <div>
       <div>
         {listItemDetails.map((list, index) => (
-          <div className="flex justify-between items-center p-2 mb-2">
+          <div key={index} className="flex justify-between items-center p-2 mb-2">
             <div className="flex gap-6 items-center">
               <Image
                 src={list.image}
