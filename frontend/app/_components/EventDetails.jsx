@@ -148,7 +148,7 @@ function EventDetails({ event }) {
         </Button>
 
         {/* View Details Button */}
-        <Link href={`/events/${event.id}`}>
+        <Link href={`/events/${event.documentId}`}>
         <Button variant="outline" className="text-primary hover:text-white hover:bg-primary">
           View Details
         </Button>

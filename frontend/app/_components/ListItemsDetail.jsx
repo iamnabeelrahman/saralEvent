@@ -16,7 +16,7 @@ function ListItemsDetail({ listItemDetails, onDeleteItem }) {
 
   return (
     <div>
-      <div>
+      <div className="h-[500px] overflow-auto">
         {listItemDetails.map((list, index) => (
           <div key={index} className="flex justify-between items-center p-2 mb-2">
             <div className="flex gap-6 items-center">
@@ -40,12 +40,7 @@ function ListItemsDetail({ listItemDetails, onDeleteItem }) {
         ))}
       </div>
 
-      <div className="absolute w-[90%] bottom-6 flex flex-col">
-        <h2 className="text-lg font-bold flex justify-between">
-          Subtotal <span>{subtotal}</span>
-        </h2>
-        <Button>View Cart</Button>
-      </div>
+   
     </div>
   );
 }

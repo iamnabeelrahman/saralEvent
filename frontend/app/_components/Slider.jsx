@@ -11,7 +11,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 function Slider({ sliderList }) {
-  // console.log(sliderList );
   
   return (
     <div className="relative w-full">

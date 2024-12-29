@@ -27,30 +27,6 @@ export interface SharedSeo extends Struct.ComponentSchema {
   };
 }
 
-export interface SharedRichText extends Struct.ComponentSchema {
-  collectionName: 'components_shared_rich_texts';
-  info: {
-    displayName: 'Rich text';
-    icon: 'align-justify';
-    description: '';
-  };
-  attributes: {
-    body: Schema.Attribute.RichText;
-  };
-}
-
-export interface SharedQuote extends Struct.ComponentSchema {
-  collectionName: 'components_shared_quotes';
-  info: {
-    displayName: 'Quote';
-    icon: 'indent';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-    body: Schema.Attribute.Text;
-  };
-}
-
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -62,14 +38,27 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
 }
 
+export interface OrderedEventTicketsOrderedEventTicket
+  extends Struct.ComponentSchema {
+  collectionName: 'components_ordered_event_tickets_ordered_event_tickets';
+  info: {
+    displayName: 'OrderedEventTicket';
+    description: '';
+  };
+  attributes: {
+    quantity: Schema.Attribute.Integer;
+    price: Schema.Attribute.Decimal;
+    event: Schema.Attribute.Relation<'oneToOne', 'api::event.event'>;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'shared.slider': SharedSlider;
       'shared.seo': SharedSeo;
-      'shared.rich-text': SharedRichText;
-      'shared.quote': SharedQuote;
       'shared.media': SharedMedia;
+      'ordered-event-tickets.ordered-event-ticket': OrderedEventTicketsOrderedEventTicket;
     }
   }
 }

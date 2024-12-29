@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { usePathname } from "next/navigation";
 import { UpdateListContext } from "./_context/UpdateListContext";
 import { useState } from "react";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +34,8 @@ export default function RootLayout({ children }) {
   const showHeader = params === '/sign-in' || params == '/create-account' ? false : true;
 
   return (
+    <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENTID }}>
+
     <html lang="en">
       <body className={outfit.className}>
         <UpdateListContext.Provider value={{updateList, setUpdateList}}>
@@ -42,5 +45,6 @@ export default function RootLayout({ children }) {
         </UpdateListContext.Provider>
       </body>
     </html>
+    </PayPalScriptProvider>
   );
 }

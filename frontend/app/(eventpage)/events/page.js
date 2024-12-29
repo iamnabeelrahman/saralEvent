@@ -12,7 +12,9 @@ async function page() {
     <div>
       <CategoryList categoryList={categoryList} />
       <EventList eventList={eventList} />
+      
     </div>
+
   );
 }
 

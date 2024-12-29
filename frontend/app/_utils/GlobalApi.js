@@ -9,6 +9,7 @@ const getCategory = () => axiosClient.get("/categories?populate=*");
 
 const getCategoryList = () =>
   axiosClient.get("/categories?populate=*").then((res) => {
+    console.log("categorie data: ", res.data.data);
     return res.data.data;
   });
 
@@ -22,7 +23,7 @@ const getAllEvent = () =>
 
 const getEventsByCategory = (category) =>
   axiosClient
-    .get("/events?filters[categories][name][$in]=" + category + "&populate=*")
+    .get("/events?filters[category][name][$in]=" + category + "&populate=*")
     .then((res) => {
       return res.data.data;
     });
@@ -85,6 +86,23 @@ const deleteListItem = (documentId, jwt) =>
     },
   });
 
+  const increaseClick = async (id) => {
+    try {
+      const eventResponse = await axiosClient.get(`/events/${id}`);
+      const currentClick = eventResponse.data.data.click;
+  
+      const updatedClick = currentClick + 1;
+
+        return await axiosClient.put(`/events/${id}`, {
+        data: { click: updatedClick },
+      });
+    } catch (error) {
+      console.error("Error updating click count:", error);
+      throw error;
+    }
+  };
+  
+
 export default {
   getCategory,
   getSlider,
@@ -96,5 +114,6 @@ export default {
   addToList,
   getListItems,
   deleteListItem,
+  increaseClick
 };
 

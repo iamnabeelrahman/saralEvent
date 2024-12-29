@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 async function getEventBySlug(slug) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/events/${slug}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_STRAPI_URL}/events/${slug}?populate=*`);
     if (!res.ok) {
     throw new Error("Event not found");
   }
@@ -36,6 +36,8 @@ export default function EventPage({ params }) {
 
   if (loading) return <div className="text-center py-10">Loading...</div>;
   if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
+
+  
 
   return (
     <div className="max-w-7xl mx-auto p-6 md:p-10 bg-white shadow-lg rounded-lg">

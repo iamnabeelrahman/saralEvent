@@ -3,7 +3,6 @@ import EventCard from './EventCard'
 
 
 function EventList({eventList}) {
-    // console.log("eventlist data :", eventList);
     
   return (
     <div className='mt-10'>
@@ -16,7 +15,6 @@ function EventList({eventList}) {
         <EventCard key={index}  event={event}/>
         ))}  * renders 12 events only as conditioned defined */}
         {eventList.map((event, index) => {
-          // console.log("Event ID inside map:", event.documentId:);  // Log ID directly here
           return <EventCard key={index} event={event} />;
 })}
 

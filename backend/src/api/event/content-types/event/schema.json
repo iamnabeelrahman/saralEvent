@@ -51,6 +51,11 @@
       "relation": "manyToMany",
       "target": "api::user-cart.user-cart",
       "inversedBy": "events"
+    },
+    "clicks": {
+      "type": "integer",
+      "min": 0,
+      "default": 0
     }
   }
 }

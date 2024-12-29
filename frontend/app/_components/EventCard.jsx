@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
@@ -10,12 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import EventDetails from "./EventDetails";
+import GlobalApi from "../_utils/GlobalApi";
 
 function EventCard({ event }) {
-  // console.log("event data: ", event);
   
   const imageUrl = event.images?.[0].url;
-  // console.log("ievent data: ", event.categories[0].name);
 
   return (
     <div
@@ -40,9 +40,10 @@ function EventCard({ event }) {
 
       <Dialog>
         <DialogTrigger asChild>
-          <Button
+        <Button
             variant="outline"
             className="text-primary hover:text-white hover:bg-primary"
+            onClick={() => GlobalApi.increaseClick(event.documentId)}
           >
             {" "}
             Add to list
@@ -52,8 +53,7 @@ function EventCard({ event }) {
           <DialogHeader>
             <DialogTitle className='text-2xl font-bold'>{event.name}</DialogTitle>
             <DialogDescription>
-            <h2 className="text-primary">{event.categories?.name}</h2>
-
+            {/* <h2 className="text-primary">{event.category[0].name}</h2> */}
             <EventDetails event={event}/>
             </DialogDescription>
           </DialogHeader>

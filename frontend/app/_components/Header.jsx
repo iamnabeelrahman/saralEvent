@@ -18,6 +18,7 @@ import {
 
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -44,14 +45,13 @@ function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    // Ensure sessionStorage is accessed on the client side
     if (typeof window !== "undefined") {
       const jwt = sessionStorage.getItem("jwt");
       const user = JSON.parse(sessionStorage.getItem("user"));
       if (jwt) {
         setIsSignedIn(true);
-        setUser(user); // Set user to state
-        setJwt(jwt); // Set jwt to state
+        setUser(user); 
+        setJwt(jwt);
       }
     }
   }, []);
@@ -67,7 +67,6 @@ function Header() {
   //get category list
   const getCategoryList = () => {
     GlobalApi.getCategory().then((res) => {
-      // console.log("CatehoryList rep: ", res.data.data);
       setCategoryList(res.data.data);
     });
   };
@@ -76,7 +75,6 @@ function Header() {
   const getListItems = async () => {
     if (!user || !jwt) return;
     const listItems_ = await GlobalApi.getListItems(user.id, jwt);
-    // console.log("list item dertails: ", listItems_);
     setTotalListItem(listItems_?.length);
     setListItemDetails(listItems_);
   };
@@ -87,11 +85,9 @@ function Header() {
   };
 
   const onDeleteItem = (documentId) => {
-    // console.log(documentId);    
     GlobalApi.deleteListItem(documentId, jwt)
       .then((res) => {
         // removing the deleted item
-        // console.log("Deleted response:", res);  
         setListItemDetails((prevDetails) =>
           prevDetails.filter((item) => item.documentId !== documentId)
         );
@@ -102,7 +98,15 @@ function Header() {
         toast("Failed to remove item");
       });
   };
-  
+
+    const [subtotal, setSubtotal] = useState(0);
+    useEffect(() => {
+      let total = 0;
+      listItemDetails.forEach((element) => {
+        total = total + element.amount;
+      });
+      setSubtotal(total.toFixed(2));
+    }, [listItemDetails]);
 
   return (
     <div className="flex p-4 shadow-sm justify-between">
@@ -169,9 +173,18 @@ function Header() {
               <SheetDescription>
                 <ListItemsDetail
                   listItemDetails={listItemDetails}
-                  onDeleteItem={onDeleteItem}/>
+                  onDeleteItem={onDeleteItem}
+                />
               </SheetDescription>
             </SheetHeader>
+            <SheetClose asChild>
+              <div className="absolute w-[90%] bottom-6 flex flex-col">
+                <h2 className="text-lg font-bold flex justify-between">
+                  Subtotal <span>{subtotal}</span>
+                </h2>
+                <Button onClick={()=>router.push( jwt ? "/checkout": "/sign-in")}>Checkout</Button>
+              </div>
+            </SheetClose>
           </SheetContent>
         </Sheet>
 
@@ -188,7 +201,7 @@ function Header() {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="cursor-pointer">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <Link href={"/profile"}> <DropdownMenuLabel>My Account</DropdownMenuLabel> </Link> 
               <DropdownMenuSeparator />
               {/* <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem> */}
               <DropdownMenuItem className="cursor-pointer">

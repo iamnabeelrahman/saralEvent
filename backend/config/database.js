@@ -7,11 +7,11 @@ module.exports = ({ env }) => ({
       database: env('DATABASE_NAME', 'strapi_database'),
       user: env('DATABASE_USERNAME', 'strapi_user'),
       password: env('DATABASE_PASSWORD', 'your_password'),
-      ssl: env.bool('DATABASE_SSL', false),
+      ssl: env.bool('DATABASE_SSL', false) ? { rejectUnauthorized: true } : false, // Updated for SSL connection
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
   },
 });
