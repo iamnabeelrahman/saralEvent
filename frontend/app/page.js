@@ -8,14 +8,14 @@ import Footer from "./_components/Footer";
 
 export default async function Home() {
   const sliderList = await GlobalApi.getSlider();
-  console.log("slider lists data ;", sliderList);
+  // console.log("slider lists data ;", sliderList);
 
   const categoryList = await GlobalApi.getCategoryList();
   const eventList = await GlobalApi.getAllEvent();
+  const citilists = await GlobalApi.getAllEvent();
 
   // console.log("event list data: ", eventList);
   // console.log("event list documtdata: ", eventList);
-
 
   return (
     <>
@@ -31,6 +31,7 @@ export default async function Home() {
             height={300}
             className="w-full h-[180px] md:h-[400px] object-cover mt-4 md:mt-9 rounded-lg" // rounded-lg for larger border-radius
           />
+        <CategoryList categoryList={categoryList} />
         </div>
       </div>
       <Footer />

@@ -9,7 +9,7 @@ const getCategory = () => axiosClient.get("/categories?populate=*");
 
 const getCategoryList = () =>
   axiosClient.get("/categories?populate=*").then((res) => {
-    console.log("categorie data: ", res.data.data);
+    // console.log("categorie data: ", res.data.data);
     return res.data.data;
   });
 
@@ -102,6 +102,33 @@ const deleteListItem = (documentId, jwt) =>
     }
   };
   
+  const getUserData = async (name)=>{
+    try {
+      await axiosClient.get(`/users?filters[username][$eq]=${name}`).then((res)=>{
+        return res.data[0]
+      })  
+    } catch (err) {
+      console.error("Errror at gettin userdata ", err);
+      throw err;
+    }
+  }
+
+
+  const fetchUserDetails = async (token) => {
+      try {
+        const response = await axiosClient.get(`/users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching user role:", error.response?.data || error.message);
+        throw error
+      }
+    };
+
 
 export default {
   getCategory,
@@ -114,6 +141,8 @@ export default {
   addToList,
   getListItems,
   deleteListItem,
-  increaseClick
+  increaseClick,
+  getUserData,
+  fetchUserDetails
 };
 

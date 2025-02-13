@@ -1,36 +1,56 @@
 {
-  "name": "backend",
+  "name": "nextjs-d1-drizzle-cloudflare-pages",
   "version": "0.1.0",
   "private": true,
-  "description": "A Strapi application",
+  "type": "module",
   "scripts": {
-    "build": "strapi build",
-    "deploy": "strapi deploy",
-    "develop": "strapi develop",
-    "seed:example": "node ./scripts/seed.js",
-    "start": "strapi start",
-    "strapi": "strapi"
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:dev": "wrangler d1 migrations apply tutorial_drizzle_d1 --local",
+    "db:migrate:prod": "wrangler d1 migrations apply tutorial_drizzle_d1 --remote",
+    "db:studio:dev": "cross-env DB_LOCAL_PATH=.wrangler\\state\\v3\\d1\\miniflare-D1DatabaseObject\\35a1ace702f93709387b6a58f346e8eab3892607e4ff97f6d1e84df416a8e07f.sqlite drizzle-kit studio --port 3094",
+    "db:studio:prod": "drizzle-kit studio --port 3098",
+    "build": "next build",
+    "dev": "next dev",
+    "pages:build": "pnpm next-on-pages",
+    "pages:dev": "pnpm pages:build && pnpm wrangler pages dev --port=3000",
+    "pages:deploy": "pnpm pages:build && pnpm wrangler pages deploy"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.0.0",
-    "@strapi/plugin-users-permissions": "5.0.0",
-    "@strapi/provider-upload-cloudinary": "^5.5.1",
-    "@strapi/strapi": "5.0.0",
-    "axios": "^1.7.9",
-    "fs-extra": "^10.0.0",
-    "mime-types": "^2.1.27",
-    "mysql2": "^3.11.5",
-    "pg": "8.8.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
+    "@tanstack/react-query": "^5.62.10",
+    "lucia": "^3.2.2",
+    "next": "14.2.21",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "server-only": "^0.0.1",
+    "superjson": "^2.2.2",
+    "zod": "^3.24.1"
   },
-  "engines": {
-    "node": ">=18.0.0 <=20.x.x",
-    "npm": ">=6.0.0"
+  "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.7",
+    "@cloudflare/workers-types": "^4.20241224.0",
+    "@t3-oss/env-nextjs": "^0.11.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/eslint": "^8.56.2",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "better-sqlite3": "^11.7.0",
+    "cross-env": "^7.0.3",
+    "drizzle-kit": "^0.23.0",
+    "drizzle-orm": "^0.31.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.1.3",
+    "eslint-plugin-drizzle": "^0.2.3",
+    "postcss": "^8.4.49",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.99.0"
   },
-  "strapi": {
-    "uuid": "26cb4c41-8a92-4ce3-8243-c5eb538bd200"
-  }
+  "packageManager": "pnpm@9.15.1"
 }
