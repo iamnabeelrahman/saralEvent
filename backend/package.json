@@ -12,16 +12,15 @@
     "build": "next build",
     "dev": "next dev",
     "pages:build": "npm next-on-pages",
-    "pages:dev": "npm pages:build && pnpm wrangler pages dev --port=3000",  
+    "pages:dev": "npm pages:build && pnpm wrangler pages dev --port=3000",
     "pages:deploy": "npm pages:build && pnpm wrangler pages deploy"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@tanstack/react-query": "^5.62.10",
     "axios": "^1.7.9",
-    "lucia": "^3.2.2",
+    "jose": "^5.9.6",
     "next": "14.2.21",
-    "next-auth": "^4.24.11",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "server-only": "^0.0.1",

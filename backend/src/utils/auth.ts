@@ -1,23 +1,27 @@
-// import { Lucia } from "lucia";
-// import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-// import { db } from "@/server/db";
-// import { sessions, users } from "@/server/db/schema";
+import { SignJWT, jwtVerify } from 'jose';
 
-// export const lucia = new Lucia(
-//   new DrizzleSQLiteAdapter(db, sessions, users),
-//   {
-//     env: process.env.NODE_ENV === "production" ? "PROD" : "DEV",
-//     getUserAttributes: (user: DatabaseUserAttributes) => ({
-//       username: user.username,
-//     }),
-//   }
-// );
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-// declare module "lucia" {
-//   interface Register {
-//     Lucia: typeof lucia;
-//     DatabaseUserAttributes: {
-//       username: string;
-//     };
-//   }
-// }
+export async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Buffer.from(hashBuffer).toString('hex');
+}
+
+export async function comparePassword(password: string, hash: string): Promise<boolean> {
+  const hashedPassword = await hashPassword(password);
+  return hashedPassword === hash;
+}
+
+export async function generateToken(userId: string): Promise<string> {
+  return await new SignJWT({ userId })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setIssuedAt()
+    .setExpirationTime('1h')
+    .sign(secret);
+}
+
+export async function verifyToken(token: string): Promise<any> {
+  return await jwtVerify(token, secret);
+}
