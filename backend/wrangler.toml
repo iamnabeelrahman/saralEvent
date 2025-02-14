@@ -10,6 +10,6 @@ pages_build_output_dir = ".vercel/output/static"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "tut" # When you create your D1 DB, you choose the name
-database_id = "b"
-preview_database_id = "b77a4"
+database_name = "" # When you create your D1 DB, you choose the name
+database_id = ""
+preview_database_id = ""

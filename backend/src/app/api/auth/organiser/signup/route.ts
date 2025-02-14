@@ -24,15 +24,12 @@ export async function POST(req: Request) {
     if (!email || !password || !fullName || !organiserName || !organiserDescription) {
       return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
     }
-
     // Check if email already exists
     const existingUser = await db.select().from(users).where(eq(users.email, email));
     if (existingUser.length > 0) {
       return NextResponse.json({ message: 'Email already exists' }, { status: 400 });
     }
-    // const newUser = await db.insert(users).values({ email, username, fullName, bio, password });
 
-    // Insert new organiser
     const newOrganiser = await db.insert(users).values({
       email, 
       fullName, 
