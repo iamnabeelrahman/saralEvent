@@ -1,5 +1,7 @@
 // import { createCustomerWithCustomId, getCustomers } from '@/server/functions/customers';
 
+import { Button } from "@/components/ui/button";
+
 export const runtime = 'edge';
 
 export default async function Home() {
@@ -14,9 +16,7 @@ export default async function Home() {
 
   return (
     <div>
-      <p>Your customer IDs</p>
 
-      <p>end</p>
     </div>
   );
 }
