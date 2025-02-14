@@ -1,61 +1,75 @@
-# 🚀 Getting started with Strapi
+<h1 align="center">Next.js + Cloudflare D1 SQL + Drizzle ORM + Drizzle Kit + Cloudflare Pages starter kit</h1>
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+# Getting started
 
-### `develop`
+## Prerequisites
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+1. Node.js >=v20.11.0
+2. pnpm >=v9.15.1
 
-```
-npm run develop
-# or
-yarn develop
-```
+## Initialise the database(s)
 
-### `start`
+1. Create D1 Database, Cloudflare API Token.
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+   [Create a production D1 database.](https://developers.cloudflare.com/d1/get-started/#3-create-a-database)
+   [Create a cloudflare API Token.](https://developers.cloudflare.com/fundamentals/api/get-started/create-token/)
+   
+   ![img.png](img.png)
 
-```
-npm run start
-# or
-yarn start
-```
+2. Install the app's dependencies:
 
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
+```sh
+pnpm install
 ```
 
-## ⚙️ Deployment
+3. Create .env file by copying from .env.example. And update .env file and wrangler.toml file.
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+4. Generate db migration files (that documents schema changes in an SQL script).
 
+```sh
+pnpm db:generate
 ```
-yarn strapi deploy
+
+5. Run db migrations (that executes the SQL script to update the database to match the schema).
+
+- dev (local) db: `pnpm db:migrate:dev`
+- prod (remote) db: `pnpm db:migrate:prod`
+
+6. View the database using a graphical user interface:
+
+- dev (local) db: `pnpm db:studio:dev`
+- prod (remote) db: `pnpm db:studio:prod`
+
+## Run the app
+
+- Run Next.js on dev. Ideal for development since it supports hot-reload/fast refresh.
+
+```sh
+pnpm dev
 ```
 
-## 📚 Learn more
+⚠️ **Warning**: `next start` will return an error due to how the application is designed to run on
+Cloudflare pages.
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+- Run Cloudflare Pages locally. Ideal to test how the app would work after being deployed.
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+```sh
+pnpm pages:dev
+```
 
-## ✨ Community
+⚠️ **Warning #1**: Connecting to the prod remote db on the local code
+[is not supported](https://developers.cloudflare.com/d1/build-with-d1/local-development/).
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+⚠️ **Warning #2**: All pages deployed to Cloudflare Pages run on edge runtime, whereas
+[ISR only works on Nodejs runtime](https://developers.cloudflare.com/pages/framework-guides/nextjs/ssr/supported-features/)
+(because how Vercel designed their functions); so, some functions like `revalidatePath` will throw
+an error when running the app with `pnpm pages:dev`. But, the functions work as expected after
+deploying.
 
----
+## Deploy
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+- Deploy code to pages:
+
+```sh
+pnpm pages:deploy
+```
