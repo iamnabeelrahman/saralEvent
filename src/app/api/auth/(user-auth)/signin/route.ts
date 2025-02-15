@@ -56,17 +56,12 @@ export async function POST(req: Request) {
       { status: 200 }
     );
 
-    // Set cookies for both access and refresh tokens
+    // Set cookies
     response.headers.set(
       'Set-Cookie',
-      `accessToken=${accessToken}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=3600`
+      `accessToken=${accessToken}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=3600, refreshToken=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=2592000`
     );
-
-    // Use `Set-Cookie` again for refreshToken (do not overwrite)
-    response.headers.append(
-      'Set-Cookie',
-      `refreshToken=${refreshToken}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=2592000` // 30 days
-    );
+    
 
     return response;
   } catch (error) {
