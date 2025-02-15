@@ -7,12 +7,16 @@ import { Toaster } from "@/components/ui/sonner"; // Ensure this path is correct
 import { UpdateListContext } from 'context/UpdateListContext';
 import Header from 'components/Header';
 
-export default function ClientSideLayout({ children }:any) {
-  const params = usePathname(); 
+interface ClientSideLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function ClientSideLayout({ children }: ClientSideLayoutProps) {
+  const pathname = usePathname(); // Using more descriptive variable name
   const [updateList, setUpdateList] = useState(false);
 
-  // Determine whether to show the header based on the path
-  const showHeader = params === '/sign-in' || params === '/create-account' ? false : true;
+  // Hide header for sign-in and create-account pages
+  const showHeader = !['/sign-in', '/create-account'].includes(pathname);
 
   return (
     // <PayPalScriptProvider options={{ clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENTID }}>
@@ -21,6 +25,6 @@ export default function ClientSideLayout({ children }:any) {
         {children}
         <Toaster />
       </UpdateListContext.Provider>
-    // {/* </PayPalScriptProvider> */}
+    // </PayPalScriptProvider>
   );
 }

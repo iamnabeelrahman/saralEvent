@@ -49,9 +49,9 @@ const ListItemsDetail: React.FC<ListItemsDetailProps> = ({ listItemDetails, onDe
                 <h2 className="text-lg font-bold">Amount {list.amount}</h2>
               </div>
             </div>
-            <button onClick={() => onDeleteItem(list.documentId)}>
+            <Button onClick={() => onDeleteItem(list.documentId)}>
               <TrashIcon />
-            </button>
+            </Button>
           </div>
         ))}
       </div>

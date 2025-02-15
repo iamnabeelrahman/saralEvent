@@ -30,9 +30,9 @@ const UserProfilePage = () => {
     console.log("Fetching user details with token:", token);
   };
 
-  const handleUpdate = async () => {
+  // const handleUpdate = async () => {
 
-  };
+  // };
 
 
 //    Tickets
