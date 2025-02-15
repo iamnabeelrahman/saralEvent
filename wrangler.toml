@@ -25,5 +25,5 @@ NODE_ENV = "production"
 [[d1_databases]]
 binding = "DB"
 database_name = "tutorial_drizzle_d1"
-database_id = "${env.DB_REMOTE_DATABASE_ID}"
-preview_database_id = "${env.DB_REMOTE_DATABASE_ID}"
+database_id = "b77a427d-9331-47b7-aaa0-659f10273f5c"
+preview_database_id = "b77a427d-9331-47b7-aaa0-659f10273f5c"
