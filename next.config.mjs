@@ -19,14 +19,13 @@ export default nextConfig;
 // we only need to use the utility during development so we can check NODE_ENV
 // (note: this check is recommended but completely optional)
 if (process.env.NODE_ENV === 'development') {
-  // Wrap the async function inside a promise to handle `await` properly
-  const setupDev = async () => {
-    try {
-      await setupDevPlatform({ persist: true });
-    } catch (e) {
+  // Use a wrapper function for async logic
+  const setupDev = () => {
+    setupDevPlatform({ persist: true }).catch((e) => {
       console.error('Error setting up dev platform:', e);
-    }
+    });
   };
-  
+
+  // Call the setupDev function in a safe context (like within useEffect)
   setupDev();
 }

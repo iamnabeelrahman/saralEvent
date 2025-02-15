@@ -2,18 +2,25 @@ import { drizzle } from 'drizzle-orm/d1';
 import * as schema from '@/server/db/schema/index';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 
+// Ensure the runtime is set for edge functions
 export const runtime = 'edge';
 
-function initDbConnection() {
-  const { env } = getRequestContext(); // Always use Cloudflare bindings
+// Function to initialize DB connection
+async function initDbConnection() {
+  try {
+    const { env } = getRequestContext(); // Always use Cloudflare bindings
 
-  if (!env.DB) {
-    throw new Error("Database binding (DB) is missing. Ensure it's set correctly.");
+    if (!env.DB) {
+      throw new Error("Database binding (DB) is missing. Ensure it's set correctly.");
+    }
+
+    console.log("DB Connection:", env.DB); // Debugging log
+    return drizzle(env.DB, { schema }); // Return the database connection
+  } catch (error) {
+    console.error("Error initializing DB connection:", error);
+    throw error; // Re-throw error to handle it properly in  app
   }
-
-  console.log("DB Connection:", env.DB); // Debugging log
-
-  return drizzle(env.DB, { schema });
 }
 
-export const db = initDbConnection();
+// Initialize db connection
+export const db = initDbConnection(); // This will now be handled safely
