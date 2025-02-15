@@ -7,6 +7,8 @@ pages_build_output_dir = ".vercel/output/static"
 # WARNING: When running a production build locally using Wrangler, be aware that the .env file may be omitted. Therefore, ensure that you have the same environment variables in your wrangler.toml file.
 # However, you don't have to include Drizzle environment unless you want to access `drizzle-kit` commands in the deployed code.
 [vars]
+[env.production]
+node_version = "18.18.0"
 
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
