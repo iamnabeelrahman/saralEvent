@@ -38,9 +38,9 @@ interface Category {
 }
 
 function Header() {
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const [categoryList, setCategoryList] = useState<Category[]>([]);  // Remove if not used.
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [totalListItem, setTotalListItem] = useState(0);
+  const [totalListItem, setTotalListItem] = useState();
   const [jwt, setJwt] = useState(null);
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
@@ -102,9 +102,9 @@ function Header() {
 
   const [subtotal, setSubtotal] = useState(0);
   useEffect(() => {
-    let total = 0;
+    const total = 0;
 
-    setSubtotal(5);
+    setSubtotal(total);
   }, [listItemDetails]);
 
   return (
