@@ -1,19 +1,29 @@
-# Your wrangler.toml file should look something like this:
 name = "tutorial_drizzle_d1"
 compatibility_date = "2024-11-11"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 
-# WARNING: When running a production build locally using Wrangler, be aware that the .env file may be omitted. Therefore, ensure that you have the same environment variables in your wrangler.toml file.
-# However, you don't have to include Drizzle environment unless you want to access `drizzle-kit` commands in the deployed code.
-[vars]
 [env.production]
 node_version = "18.18.0"
+NODE_ENV = "production"
+
+# Use environment variables for sensitive values
+[vars]
+  CLOUDFLARE_ACCOUNT_ID = "${env.CLOUDFLARE_ACCOUNT_ID}"
+  CLOUDFLARE_API_TOKEN = "${env.CLOUDFLARE_API_TOKEN}"
+  DB_REMOTE_DATABASE_ID = "${env.DB_REMOTE_DATABASE_ID}"
+  JWT_SECRET = "${env.JWT_SECRET}"
+  JWT_REFRESH_SECRET = "${env.JWT_REFRESH_SECRET}"
+  NEXTAUTH_SECRET = "${env.NEXTAUTH_SECRET}"
+  GITHUB_CLIENT_ID = "${env.GITHUB_CLIENT_ID}"
+  GITHUB_CLIENT_SECRET = "${env.GITHUB_CLIENT_SECRET}"
+  GOOGLE_CLIENT_ID = "${env.GOOGLE_CLIENT_ID}"
+  GOOGLE_CLIENT_SECRET = "${env.GOOGLE_CLIENT_SECRET}"
 
 
 
 [[d1_databases]]
-binding = "DB" # i.e. available in your Worker on env.DB
-database_name = "tutorial_drizzle_d1" # When you create your D1 DB, you choose the name
-database_id = "b77a427d-9331-47b7-aaa0-659f10273f5c"
-preview_database_id = "b77a427d-9331-47b7-aaa0-659f10273f5c"
+binding = "DB"
+database_name = "tutorial_drizzle_d1"
+database_id = "${env.DB_REMOTE_DATABASE_ID}"
+preview_database_id = "${env.DB_REMOTE_DATABASE_ID}"

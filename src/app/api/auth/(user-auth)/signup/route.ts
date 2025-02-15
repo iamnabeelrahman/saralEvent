@@ -19,6 +19,8 @@
 
       // Check if email exists
       const existingUser = await db.select().from(users).where(eq(users.email, email));
+      console.log(existingUser);
+      
       if (existingUser.length > 0) {
         return NextResponse.json({ message: "Email already exists" }, { status: 400 });
       }
