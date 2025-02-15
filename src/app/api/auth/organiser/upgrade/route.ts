@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/server/db';
 import { users } from '@/server/db/schema';
 import { eq } from 'drizzle-orm';
+import { getRequestContext } from '@cloudflare/next-on-pages';
+import * as schema from '@/server/db/schema/index';
+import { drizzle } from 'drizzle-orm/d1';
 
 export const runtime = 'edge';
 
@@ -21,8 +23,11 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
     }
 
+    const { env } = getRequestContext();
+    const DB = drizzle(env.DB, { schema });
+
     // Check if the user exists
-    const existingUser = await db.select().from(users).where(eq(users.email, email)).limit(1).then(res => res[0]);
+    const existingUser = await DB.select().from(users).where(eq(users.email, email)).limit(1).then(res => res[0]);
 
     if (!existingUser) {
         return NextResponse.json({ message: 'User not found' }, { status: 404 });
@@ -33,7 +38,7 @@ export async function PATCH(req: Request) {
         return NextResponse.json({ message: 'User is already an organiser' }, { status: 400 });
       }
 
-    await db
+    await DB
       .update(users)
       .set({ role: 'organiser', organiserName, organiserDescription })
       .where(eq(users.email, email));

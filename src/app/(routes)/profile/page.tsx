@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-const defaultImage = "https://via.placeholder.com/150"; 
+// const defaultImage = "https://via.placeholder.com/150"; 
 
 const UserProfilePage = () => {
   // const [user, setUser] = useState({});
