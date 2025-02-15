@@ -10,6 +10,10 @@ pages_build_output_dir = ".vercel/output/static"
 [env.production]
 node_version = "18.18.0"
 
+[build]
+node_compat = true
+
+
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "tutorial_drizzle_d1" # When you create your D1 DB, you choose the name
