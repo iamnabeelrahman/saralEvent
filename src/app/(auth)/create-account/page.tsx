@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowBigLeft, LoaderIcon } from 'lucide-react';
+import {  LoaderIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -44,7 +44,7 @@ const Page = () => {
         toast('Account created successfully');
         router.push('/');
       } else {
-        toast(data.message || 'An error occurred');
+        toast(data.message ?? 'An error occurred');
       }
     } catch (error) {
       console.error(error);

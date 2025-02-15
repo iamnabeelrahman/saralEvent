@@ -2,12 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { LoaderIcon } from "lucide-react";
-import { checkUserSignedStatus } from "utils/auth";
-import { GetServerSideProps } from 'next';
+
 
 interface User {
   id: string;

@@ -79,17 +79,26 @@ function Header() {
   // }, [updateList, user, jwt]);
 
   //get category list
-  const getCategoryList = () => {};
+  const getCategoryList = () => {
+    console.log(" it is getCtegoryList function");
+
+  };
 
   //get items list
-  const getListItems = async () => {};
+  const getListItems = async () => {
+    console.log(" it is list item get function");
+
+  };
 
   const onSignOut = () => {
     sessionStorage.clear();
     router.push('/sign-in');
   };
 
-  const onDeleteItem = () => {};
+  const onDeleteItem = () => {
+    console.log(" it is delet function");
+    
+  };
 
   const [subtotal, setSubtotal] = useState(0);
   useEffect(() => {

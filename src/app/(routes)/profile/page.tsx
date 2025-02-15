@@ -1,34 +1,33 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 const defaultImage = "https://via.placeholder.com/150"; 
 
 const UserProfilePage = () => {
-  const [user, setUser] = useState({});
+  // const [user, setUser] = useState({});
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [token, setToken] = useState<string | null>(null);
-  const [message, setMessage] = useState("");
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [token, setToken] = useState<string | null>(null);
+  // const [message, setMessage] = useState("");
 
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setToken(token);
-      fetchUserDetails(token);
-    } else {
-      setIsLoading(false);
-      setMessage("Please log in to view your profile.");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setToken(token);
+  //     fetchUserDetails(token);
+  //   } else {
+  //     setIsLoading(false);
+  //     setMessage("Please log in to view your profile.");
+  //   }
+  // }, []);
 
-  const fetchUserDetails = async (token: string) => {
-    // Your fetch logic here
-    console.log("Fetching user details with token:", token);
-  };
+  // const fetchUserDetails = async (token: string) => {
+  //   // Your fetch logic here
+  //   console.log("Fetching user details with token:", token);
+  // };
 
   // const handleUpdate = async () => {
 

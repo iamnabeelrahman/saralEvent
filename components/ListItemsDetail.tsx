@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { DeleteIcon, Trash2Icon, TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import GlobalApi from "utils/GlobalApi";
 
 // Define types for the props
 interface ListItemDetail {
@@ -49,7 +48,7 @@ const ListItemsDetail: React.FC<ListItemsDetailProps> = ({ listItemDetails, onDe
                 <h2 className="text-lg font-bold">Amount {list.amount}</h2>
               </div>
             </div>
-            <Button onClick={() => onDeleteItem(list.documentId)}>
+            <Button onClick={() => onDeleteItem(subtotal)}>
               <TrashIcon />
             </Button>
           </div>
