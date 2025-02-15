@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {  LoaderIcon } from 'lucide-react';
+import { LoaderIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -39,8 +39,6 @@ const Page = () => {
       const data: SignUpResponse = await response.json();
 
       if (response.ok) {
-        // sessionStorage.setItem('user', JSON.stringify(data.user));
-        // sessionStorage.setItem('jwt', data.jwt);
         toast('Account created successfully');
         router.push('/');
       } else {
@@ -55,11 +53,9 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const jwt = sessionStorage.getItem('jwt');
-      if (jwt) {
-        setIsToken(true);
-      }
+    if (typeof window !== 'undefined' && localStorage.getItem('jwt')) {
+      alert('You are already signed-in');
+      router.push('/');
     }
   }, []);
 
@@ -80,7 +76,7 @@ const Page = () => {
   return (
     <div className="my-20 flex items-baseline justify-center">
       <div className="flex flex-col items-center justify-center border-gray-200 bg-slate-200 p-10">
-     <h2 className="text-3xl font-bold text-purple-600">Create Account</h2>
+        <h2 className="text-3xl font-bold text-purple-600">Create Account</h2>
         <h2 className="mt-2 text-gray-500">Enter your details to create an account</h2>
         <div className="mt-7 flex w-full flex-col gap-5">
           <Input
@@ -99,7 +95,7 @@ const Page = () => {
             value={fullName}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, setFullName)}
           />
-           <div className="relative">
+          <div className="relative">
             <Input
               type={showPassword ? 'text' : 'password'}
               placeholder="Password"
@@ -119,7 +115,6 @@ const Page = () => {
             value={bio}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e, setBio)}
           />
-         
 
           <Button
             className="cursor-pointer"

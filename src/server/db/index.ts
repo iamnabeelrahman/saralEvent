@@ -5,13 +5,15 @@ import { getRequestContext } from '@cloudflare/next-on-pages';
 export const runtime = 'edge';
 
 function initDbConnection() {
-  if (process.env.NODE_ENV === 'development') {
-    const { env } = getRequestContext();
+  const { env } = getRequestContext(); // Always use Cloudflare bindings
 
-    return drizzle(env.DB, { schema });
+  if (!env.DB) {
+    throw new Error("Database binding (DB) is missing. Ensure it's set correctly.");
   }
 
-  return drizzle(process.env.DB as unknown as D1Database, { schema });
+  console.log("DB Connection:", env.DB); // Debugging log
+
+  return drizzle(env.DB, { schema });
 }
 
 export const db = initDbConnection();

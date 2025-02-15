@@ -13,4 +13,3 @@ binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "tutorial_drizzle_d1" # When you create your D1 DB, you choose the name
 database_id = "b77a427d-9331-47b7-aaa0-659f10273f5c"
 preview_database_id = "b77a427d-9331-47b7-aaa0-659f10273f5c"
-migrations_dir = "./migrations"
