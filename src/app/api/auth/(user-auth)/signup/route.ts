@@ -25,7 +25,7 @@
 
 
   const hashedPassword = await hashPassword(password);
-    const newUser =   await db.insert(users).values({
+  await db.insert(users).values({
         email,
         username,
         fullName,

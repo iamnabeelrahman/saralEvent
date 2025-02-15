@@ -4,6 +4,7 @@ import { users } from '@/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { comparePassword, generateToken, generateRefreshToken } from 'utils/auth';
 
+
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
