@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/server/db';
 import { users } from '@/server/db/schema';
+import { getRequestContext } from '@cloudflare/next-on-pages';
+import * as schema from '@/server/db/schema/index';
 import { eq } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/d1';
 import { comparePassword, generateToken, generateRefreshToken } from 'utils/auth';
-
 
 export const runtime = 'edge';
 
@@ -13,7 +14,10 @@ export async function POST(req: Request) {
 
     console.log('email and password = ', email, password);
 
-    const existingUser = await db.select().from(users).where(eq(users.email, email));
+    const { env } = getRequestContext();
+    const DB = drizzle(env.DB, {schema});
+
+    const existingUser = await DB.select().from(users).where(eq(users.email, email));
 
     console.log('Database response:', existingUser);
 

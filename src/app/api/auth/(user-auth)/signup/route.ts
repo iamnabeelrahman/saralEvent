@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/server/db';
+import { getRequestContext } from '@cloudflare/next-on-pages';
+import * as schema from '@/server/db/schema/index';
+import { drizzle } from 'drizzle-orm/d1';
 import { users } from '@/server/db/schema';
 import { eq } from 'drizzle-orm';
 import { hashPassword } from 'utils/auth';
@@ -24,8 +26,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
     }
 
+    const { env } = getRequestContext();
+    const DB = drizzle(env.DB, {schema});
+
     // Check if email exists
-    const existingUser = await db.select().from(users).where(eq(users.email, email));
+    const existingUser = await DB.select().from(users).where(eq(users.email, email));
     console.log(existingUser);
 
     if (existingUser.length > 0) {
@@ -33,7 +38,7 @@ export async function POST(req: Request) {
     }
 
     const hashedPassword = await hashPassword(password);
-    await db.insert(users).values({
+    await DB.insert(users).values({
       email,
       username,
       fullName,
