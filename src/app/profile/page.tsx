@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import axios from 'axios';
 
 // const defaultImage = "https://via.placeholder.com/150";
+export const runtime = 'edge';
+
 
 interface User {
   fullName: string;

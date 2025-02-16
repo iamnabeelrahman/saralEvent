@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+export const runtime = 'edge';
 
 // const defaultImage = "https://via.placeholder.com/150"; 
 

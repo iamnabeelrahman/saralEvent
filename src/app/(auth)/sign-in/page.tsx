@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { LoaderIcon } from "lucide-react";
 
+export const runtime = 'edge';
+
 
 interface User {
   id: string;

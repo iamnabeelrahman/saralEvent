@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+export const runtime = 'edge';
+
 // Define the structure of the API response
 interface SignUpResponse {
   user: { username: string; email: string }; // Update as per your actual response shape
@@ -24,6 +26,8 @@ const Page = () => {
   const [loader, setLoader] = useState<boolean>(false);
   const [isToken, setIsToken] = useState<boolean>(false);
   const router = useRouter();
+
+  
 
   const onCreateAccount = async () => {
     setLoader(true);
