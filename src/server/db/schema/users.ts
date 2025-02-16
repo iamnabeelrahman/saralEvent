@@ -22,3 +22,25 @@ export const users = sqliteTable("users", {
   refreshToken: text("refresh_token"),
   createdAt: integer("created_at", { mode: "timestamp" }).defaultNow(),
 });
+
+
+// const expirationTime = Math.floor(Date.now() / 1000) + 3600; // 1 hour from now (in seconds)
+
+// await db.insert(users).values({
+//   email: "user@example.com",
+//   password: "hashedpassword",
+//   resetPasswordToken: "randomtoken123",
+//   resetPasswordTokenExpiry: expirationTime, // ✅ Store as UNIX timestamp
+// });
+
+
+// const user = await db
+//   .select()
+//   .from(users)
+//   .where(
+//     and(
+//       eq(users.resetPasswordToken, "randomtoken123"),
+//       gt(users.resetPasswordTokenExpiry, Math.floor(Date.now() / 1000)) // ✅ Check expiry
+//     )
+//   )
+//   .get();

@@ -1,15 +1,24 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifyToken } from "utils/auth"; // Import your token verification function
+import { verifyToken } from "utils/auth";
 
 export async function middleware(req: NextRequest) {
-  // Extract token from cookies
   const token = req.cookies.get("accessToken")?.value;
 
-  // If there's no token, deny access to protected routes
+  const path = req.nextUrl.pathname
+  const isPathPublic = path === '/sign-in' || path ==='/create-account'
+
+  if (isPathPublic && token) {
+    return NextResponse.redirect(new URL('/', req.nextUrl))
+  }
+
+  if (!isPathPublic && !token) {
+    return NextResponse.redirect(new URL('/sign-in', req.nextUrl))
+  }
+  
   if (!token) {
-    if (req.nextUrl.pathname.startsWith("/dashboard") ) {
-      return NextResponse.redirect(new URL("/sign-in", req.url));
+    // No token found, proceed to the next request
+    if (req.nextUrl.pathname.startsWith("/dashboard")) {
     }
     return NextResponse.next();
   }
@@ -18,9 +27,9 @@ export async function middleware(req: NextRequest) {
     // Verify the token
     await verifyToken(token);
 
-    // If user is logged in, prevent access to sign-in page
-    if (req.nextUrl.pathname === "/sign-in" || "create-account") {
-      return NextResponse.redirect(new URL("/", req.url));
+    // If user is logged in, prevent access to sign-in or create-account pages
+    if (req.nextUrl.pathname === "/sign-in" || req.nextUrl.pathname === "/create-account") {
+      return NextResponse.redirect(new URL("/", req.url));  // Redirect to home or dashboard
     }
 
     return NextResponse.next();
@@ -32,5 +41,5 @@ export async function middleware(req: NextRequest) {
 
 // Apply middleware to relevant routes
 export const config = {
-  matcher: ["/dashboard",  "/sign-in", "/create-account"], // Protect these routes
+  matcher: ["/dashboard", "/sign-in", "/create-account"], // Protect these routes
 };

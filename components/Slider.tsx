@@ -11,18 +11,17 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 type Slider = {
-    id: number;       // id of the slider
-    title: string;    // title of the slider
-    imageUrl: string; // image URL of the slider
-  };
-  
-  type SliderProps = {
-    sliderList: Slider[]; // Array of Slider objects
-  };
+  id: number; // id of the slider
+  title: string; // title of the slider
+  imageUrl: string; // image URL of the slider
+};
 
-  
-  function Slider({ sliderList }: SliderProps) {
-    return (
+type SliderProps = {
+  sliderList: Slider[]; // Array of Slider objects
+};
+
+function Slider({ sliderList }: SliderProps) {
+  return (
     <div className="relative w-full">
       {/* Carousel Content with Images */}
       <Carousel>
@@ -35,7 +34,7 @@ type Slider = {
                   alt={`Slider photo`}
                   width={800}
                   height={400}
-                  className="h-[60vh] w-full rounded-2xl object-cover"
+                  className="h-auto w-full rounded-2xl object-cover md:h-[60vh]"
                 />
               </CarouselItem>
             ))
@@ -75,5 +74,4 @@ type Slider = {
     </div>
   );
 }
-
 export default Slider;

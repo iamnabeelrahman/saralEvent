@@ -49,7 +49,7 @@ const SignInPage = () => {
   const onSignIn = async () => {
     setLoader(true);
     try {
-      const response = await fetch("/api/auth/signin", {
+      const response = await fetch("/api/users/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

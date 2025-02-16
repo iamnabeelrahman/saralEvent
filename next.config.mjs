@@ -4,7 +4,7 @@ import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains:[ 'localhost', 'via.placeholder.com', 't4.ftcdn.net', 'res.cloudinary.com', 'saralevent-backend.onrender.com']
+    domains:[ 'localhost', 'via.placeholder.com', 't4.ftcdn.net', 'res.cloudinary.com', 'saralevent-backend.onrender.com', 'encrypted-tbn0.gstatic.com']
   },
 };
 export default nextConfig;

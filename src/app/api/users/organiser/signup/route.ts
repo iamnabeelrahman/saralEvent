@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     } = await req.json();
 
     if (!email || !password || !fullName || !organiserName || !organiserDescription) {
-      return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
+      return NextResponse.json({ success: false,  message: 'All fields are required' }, { status: 400 });
     }
 
     const { env } = getRequestContext();
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     // Check if email already exists
     const existingUser = await DB.select().from(users).where(eq(users.email, email));
     if (existingUser.length > 0) {
-      return NextResponse.json({ message: 'Email already exists' }, { status: 400 });
+      return NextResponse.json({success: false, message: 'Email already exists' }, { status: 400 });
     }
 
     const newOrganiser = await DB.insert(users).values({
@@ -54,6 +54,6 @@ export async function POST(req: Request) {
       { status: 201 }
     );
   } catch (error) {
-    return NextResponse.json({ message: 'Error registering organiser' }, { status: 500 });
+    return NextResponse.json({ success: false, message: 'Error registering organiser' }, { status: 500 });
   }
 }

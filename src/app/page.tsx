@@ -1,31 +1,60 @@
 'use client';
-// import { createCustomerWithCustomId, getCustomers } from '@/server/functions/customers';
-
+import axios from 'axios';
+import CategoryList from 'components/CategoryList';
 import Slider from 'components/Slider';
-import { useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export const runtime = 'edge';
 
-export default async function Home() {
-  const [sliderList, setSliderList] = useState([])
+export default function Home() {
+  const [sliderList, setSliderList] = useState<any>([]);
+  const [categoryList, setCategoryList] = useState<any>([]);
 
-  // either use server actions
-  // const customers = await getCustomers();
+  useEffect(() => {
+    const fetchSliderData = async () => {
+      try {
+        const response = await axios.get('/api/sliders');
+        setSliderList(response.data); 
+      } catch (error) {
+        console.error('Error fetching slider data:', error);
+      }
+      // console.log("Helllo");
+      
+    };
 
-  // or fetch the api
-  // const response = await fetch(`http://localhost:3000/api`);
-  // const customers = (await response.json()).result; // <-- you will have to work with types quite a bit
+    const fetchCategoryData = async () => {
+      try {
+        const response = await axios.get('/api/categories');
+        // console.log("API response:", response.data.categoryList);  // Debugging line
+        setCategoryList(response.data.categoryList);  // Set the categories data
+      } catch (error) {
+        console.error('Error fetching category data:', error);
+      }
+      // console.log("Helllo");
+    };
 
-  const getSlider = () => {
-    console.log("Getting slider");
-    
-  }
+    fetchSliderData();
+    fetchCategoryData();
+  }, []);
 
   return (
     <>
-      <div className="px-9 md:px-14 md:pt-10">
-        <Slider sliderList= {sliderList} />
-      </div>
+<div className="px-4 md:px-14 md:pt-10">
+  <Slider sliderList={sliderList} />
+  <CategoryList categoryList={categoryList} />
+
+  <div className="mt-4 md:mt-9">
+    <Image
+      src="/homebanner.png"
+      alt="Banner"
+      width={1000}
+      height={400} // Adjust the height to a more suitable value for larger screens
+      className="w-full h-auto md:h-[300px] object-cover rounded-lg" 
+    />
+  </div>
+</div>
+
     </>
   );
 }

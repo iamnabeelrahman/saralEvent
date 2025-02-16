@@ -1,0 +1,1 @@
+ALTER TABLE `categories` RENAME COLUMN `category_logo` TO `icon`;

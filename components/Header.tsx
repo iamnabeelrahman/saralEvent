@@ -28,16 +28,17 @@ import { UpdateListContext } from 'context/UpdateListContext';
 import ListItemsDetail from './ListItemsDetail';
 import { toast } from 'sonner';
 import SignOut from './SignOut';
+import axios from 'axios';
 
 interface Category {
   id: string | number;
   name: string;
-  icon?: {
-    url: string;
-  };
+  icon?: string;
+
 }
 
 function Header() {
+  const [sliderList, setSliderList] = useState<any>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);  // Remove if not used.
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [totalListItem, setTotalListItem] = useState();
@@ -53,15 +54,15 @@ function Header() {
     if (typeof window !== 'undefined' && localStorage.getItem('token')) {
       const token = localStorage.getItem('token');
       const userItem = localStorage.getItem('user');
-      console.log('token', token);
+      // console.log('token', token);
 
       if (userItem) {
         const user = JSON.parse(userItem);
-        console.log('user: ', user);
+        // console.log('user: ', user);
 
         if (token) {
           setIsSignedIn(true);
-          console.log('isUser? : ', isSignedIn);
+          // console.log('isUser? : ', isSignedIn);
 
           setToken(token);
           setUser(user);
@@ -70,19 +71,28 @@ function Header() {
     }
   }, []);
 
-  useEffect(() => {
-    getCategoryList();
-  }, []);
+
 
   // useEffect(() => {
   //   getListItems();
   // }, [updateList, user, jwt]);
 
-  //get category list
-  const getCategoryList = () => {
-    console.log(" it is getCtegoryList function");
 
-  };
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      try {
+        const response = await axios.get('/api/categories');
+        // console.log("API response:", response.data.categoryList);  // Debugging line
+        setCategoryList(response.data.categoryList);  // Set the categories data
+      } catch (error) {
+        console.error('Error fetching category data:', error);
+      }
+      // console.log("Helllo");
+    };
+
+    fetchCategoryData();
+  }, []);
+
 
   //get items list
   const getListItems = async () => {
@@ -109,10 +119,10 @@ function Header() {
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md transition-all duration-300 ease-in-out">
-      <div className="flex justify-between p-4 shadow-sm">
+      <div className="flex p-4 shadow-sm justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" passHref>
-            <span className="text-base font-bold text-purple-600 transition-colors hover:text-indigo-600 md:text-3xl">
+            <span className="text-base md:text-3xl font-bold text-purple-600 hover:text-indigo-600 transition-colors">
               Saral Events
             </span>
           </Link>
@@ -136,8 +146,8 @@ function Header() {
                       width={23}
                       height={23}
                       src={
-                        category?.icon?.url
-                          ? category.icon.url
+                        category?.icon
+                          ? category.icon
                           : 'https://t4.ftcdn.net/jpg/08/49/36/01/360_F_849360193_JguSdX5IYrE9skrUYqsnix3eNj38D5Vq.jpg'
                       }
                       alt="category icon"
@@ -156,7 +166,7 @@ function Header() {
         </div>
 
         <div className="flex items-center gap-5">
-          <Sheet>
+         {isSignedIn &&( <Sheet>
             <SheetTrigger>
               <h2 className="flex cursor-pointer items-center gap-2 text-lg">
                 <ShoppingBasket className="h-7 w-7" />
@@ -183,7 +193,7 @@ function Header() {
                 </div>
               </SheetClose>
             </SheetContent>
-          </Sheet>
+          </Sheet>) }
 
           {!isSignedIn ? (
             <Link href={'/sign-in'}>

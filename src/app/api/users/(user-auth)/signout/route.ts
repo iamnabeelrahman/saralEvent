@@ -11,15 +11,8 @@ export async function POST() {
     );
 
     // Set both accessToken and refreshToken cookies to expire immediately
-    response.headers.set(
-      "Set-Cookie",
-      `accessToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`
-    );
-
-    response.headers.append(
-      "Set-Cookie",
-      `refreshToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0`
-    );
+    response.cookies.set("refreshToken", "", {httpOnly: true, expires: new Date(0)})
+    response.cookies.set("accessToken", "", {httpOnly: true, expires: new Date(0)})
 
     return response;
   } catch (error) {

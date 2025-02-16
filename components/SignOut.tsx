@@ -6,7 +6,7 @@ export default function SignOut() {
   const router = useRouter();
 
   async function handleSignOut() {
-    const res = await fetch("/api/auth/signout", { method: "POST" });
+    const res = await fetch("/api/users/signout", { method: "POST" });
 
     if (res.ok) {
       router.push("/sign-in"); // Redirect to login page after logout
@@ -15,5 +15,5 @@ export default function SignOut() {
     }
   }
 
-  return <span onClick={handleSignOut}>Sign Out</span>;
+  return <span onClick={handleSignOut}>Signout</span>;
 }
