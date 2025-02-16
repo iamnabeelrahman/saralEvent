@@ -13,11 +13,6 @@ interface User {
   profileImage: string;
 }
 
-interface UserProfileProps {
-  params: {
-    username: string;
-  };
-}
 
 const Profile = () => {
   const [user, setUser] = useState<User>({ fullName: '', username: '', role: '', profileImage: '' });
@@ -33,7 +28,7 @@ const Profile = () => {
   
   const fetchUserDetails = async () => {
     try {
-      const response = await axios.get('/api/users/me');
+      const response = await axios.get<{ user: User }>('/api/users/me');
       // console.log('Single user data: ', response.data.user);
       setUser(response.data.user);
     } catch (error) {

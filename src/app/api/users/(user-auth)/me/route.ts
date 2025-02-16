@@ -23,18 +23,19 @@ export async function GET(req: NextRequest) {
 
     const getUserData: UserData = await verifyToken(token);
 
-    if (!getUserData || !getUserData.email) {
+    if (!getUserData.userId) {
         return NextResponse.json({ success: false, message: 'Invalid token' }, { status: 401 });
       }
       
     const userRecord = await DB.select().from(users).where(eq(users.email, getUserData.email));
 
-    if (!userRecord || userRecord.length === 0) {
+    if (!userRecord) {
       return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
     }
     
+  
       if (userRecord[0]) {
-        const { password, refreshToken, resetPasswordToken, ...safeUser } = userRecord[0];
+        const { password: _, refreshToken: __, resetPasswordToken: ___, ...safeUser } = userRecord[0];
 
       return NextResponse.json({
         success: true,

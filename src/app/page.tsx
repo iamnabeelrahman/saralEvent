@@ -62,7 +62,7 @@ export default function Home() {
       if (response.data.success) {
         setCategoryList(response.data.categoryList);
       } else {
-        console.error('Failed to fetch categories:', response.data.message || 'Unknown error');
+        console.error('Failed to fetch categories:', response.data.message ?? 'Unknown error');
       }
     } catch (error) {
       console.error('Error fetching category data:', error);

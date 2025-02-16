@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     // Verify user token
     const getUserData: UserData = await verifyToken(token);
-    if (!getUserData || !getUserData.userId) {
+    if (!getUserData.userId) {
       return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
     }
 
