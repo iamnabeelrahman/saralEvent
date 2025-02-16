@@ -7,36 +7,42 @@ import { useEffect, useState } from 'react';
 
 export const runtime = 'edge';
 
+
 export default function Home() {
-  const [sliderList, setSliderList] = useState<any>([]);
-  const [categoryList, setCategoryList] = useState<any>([]);
+  const [sliderList, setSliderList] = useState<any[]>([]);
+  const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
-    const fetchSliderData = async () => {
-      try {
-        const response = await axios.get('/api/sliders');
-        setSliderList(response.data); 
-      } catch (error) {
-        console.error('Error fetching slider data:', error);
-      }
-      // console.log("Helllo");
-      
+    const fetchData = async () => {
+      await fetchSliderData();
+      await fetchCategoryData();
     };
 
-    const fetchCategoryData = async () => {
-      try {
-        const response = await axios.get('/api/categories');
-        // console.log("API response:", response.data.categoryList);  // Debugging line
-        setCategoryList(response.data.categoryList);  // Set the categories data
-      } catch (error) {
-        console.error('Error fetching category data:', error);
-      }
-      // console.log("Helllo");
-    };
-
-    fetchSliderData();
-    fetchCategoryData();
+    fetchData().catch((error) => console.error('Error fetching data:', error));
   }, []);
+
+  const fetchSliderData = async () => {
+    try {
+      const response = await axios.get<{ success: boolean; sliderList: any[] }>('/api/sliders');
+      setSliderList(response.data.sliderList);
+    } catch (error) {
+      console.error('Error fetching slider data:', error);
+    }
+  };
+
+  const fetchCategoryData = async () => {
+    try {
+      const response = await axios.get('/api/categories');
+      if (response.data.success) {
+        setCategoryList(response.data.categoryList); // Correct structure
+      } else {
+        console.error("Failed to fetch categories:", response.data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+  };
+  
 
   return (
     <>

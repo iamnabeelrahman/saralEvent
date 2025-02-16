@@ -1,11 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 
 // const defaultImage = "https://via.placeholder.com/150"; 
 
-const UserProfile = ({params}: any) => {
+interface UserProfileProps {
+  params: {
+    username: string;
+  };
+}
+
+const UserProfile = ({ params }: UserProfileProps) => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

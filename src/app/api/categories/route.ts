@@ -1,4 +1,3 @@
-import { categories } from '@/server/db/schema';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 import { NextResponse } from 'next/server';
 import * as schema from '@/server/db/schema/index';
@@ -6,7 +5,7 @@ import { drizzle } from 'drizzle-orm/d1';
 
 export const runtime = 'edge';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const { env } = getRequestContext();
     const DB = drizzle(env.DB, { schema });
@@ -32,7 +31,7 @@ export async function POST(req: Request) {
     const { env } = getRequestContext();
     // console.log('ENV:', env);
 
-    if (!env || !env.DB) {
+    if (!env?.DB) {
       console.error('Error: env or env.DB is undefined');
       return NextResponse.json(
         { success: false, message: 'Database environment not found' },

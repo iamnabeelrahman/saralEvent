@@ -1,5 +1,4 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
-import { channels } from "./channels";
 import { users } from "./users";
 import { events } from "./events";
 

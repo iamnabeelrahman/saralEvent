@@ -1,4 +1,3 @@
-import { customerTable, users, sliders } from '@/server/db/schema';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 import { NextResponse } from 'next/server';
 import * as schema from '@/server/db/schema/index';
@@ -8,7 +7,7 @@ export const runtime = 'edge';
 
 
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const { env } = getRequestContext();
     const DB = drizzle(env.DB, { schema });
@@ -31,7 +30,7 @@ export async function POST(req: Request) {
       const { env } = getRequestContext();
       // console.log("ENV:", env);  // 🛠 Debugging log
   
-      if (!env || !env.DB) {
+      if (!env?.DB) {
         console.error("❌ Error: env or env.DB is undefined");
         return NextResponse.json(
           { success: false, message: "Database environment not found" },
@@ -54,7 +53,7 @@ export async function POST(req: Request) {
   
       // Insert into DB
       const [newSlider] = await DB.insert(schema.sliders)
-        .values({ title, imageUrl }) // 🔥 Fix column mismatch
+        .values({ title, imageUrl }) 
         .returning();
   
       return NextResponse.json(

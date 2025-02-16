@@ -20,8 +20,9 @@ const Profile = () => {
 
 
   useEffect(()=> {
-    fetchUserDetails()
+    void  fetchUserDetails()
   }, [])
+  
   const fetchUserDetails = async () => {
     try {
       const response = await axios.get('/api/users/me');

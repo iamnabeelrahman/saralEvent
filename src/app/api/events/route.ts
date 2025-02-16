@@ -1,5 +1,7 @@
 import { getRequestContext } from "@cloudflare/next-on-pages";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+
+import {  NextResponse } from "next/server";
 import { drizzle } from "drizzle-orm/d1";
 import * as schema from "@/server/db/schema/index";
 import { verifyToken } from "utils/auth";
@@ -8,7 +10,7 @@ import { verifyToken } from "utils/auth";
 export const runtime = "edge";
 
 // ✅ GET: Fetch all events (Public)
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const { env } = getRequestContext();
     const DB = drizzle(env.DB, { schema });
@@ -35,7 +37,7 @@ export async function GET(req: Request) {
       const DB = drizzle(env.DB, { schema });
       
       // Extract token from cookies
-      const token = req.cookies.get('accessToken')?.value || '';
+      const token = req.cookies.get('accessToken')?.value ?? '';
   
       // Verify user token
       const getUserData = await verifyToken(token);
@@ -58,11 +60,12 @@ export async function GET(req: Request) {
       }: { 
         title: string;
         description: string;
-        date: any;
+        date: string | number;
         location: string;
-        price: any;
-        categoryId: any;
-        channelId: any;
+        price: number;
+        categoryId: string;
+        channelId: string;
+        
       } = await req.json();
   
       // Validate required fields

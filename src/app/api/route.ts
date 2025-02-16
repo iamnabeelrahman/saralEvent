@@ -1,4 +1,4 @@
-import { customerTable, users } from '@/server/db/schema';
+import {  users } from '@/server/db/schema';
 import { getRequestContext } from '@cloudflare/next-on-pages';
 import * as schema from '@/server/db/schema/index';
 import { drizzle } from 'drizzle-orm/d1';
