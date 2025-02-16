@@ -34,7 +34,10 @@ interface Category {
   id: string | number;
   name: string;
   icon?: string;
+}
 
+interface CategoryResponse {
+  categoryList: Category[];
 }
 
 function Header() {
@@ -77,11 +80,14 @@ function Header() {
   //   getListItems();
   // }, [updateList, user, jwt]);
 
-
   useEffect(() => {
+    void fetchCategoryData();
+  }, []);
+
+  
     const fetchCategoryData = async () => {
       try {
-        const response = await axios.get('/api/categories');
+        const response = await axios.get<CategoryResponse>('/api/categories');
         // console.log("API response:", response.data.categoryList);  // Debugging line
         setCategoryList(response.data.categoryList);  // Set the categories data
       } catch (error) {
@@ -90,8 +96,6 @@ function Header() {
       // console.log("Helllo");
     };
 
-    fetchCategoryData();
-  }, []);
 
 
   //get items list

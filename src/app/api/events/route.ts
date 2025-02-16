@@ -1,15 +1,21 @@
-import { getRequestContext } from "@cloudflare/next-on-pages";
-import type { NextRequest } from "next/server";
+import { getRequestContext } from '@cloudflare/next-on-pages';
+import type { NextRequest } from 'next/server';
 
-import {  NextResponse } from "next/server";
-import { drizzle } from "drizzle-orm/d1";
-import * as schema from "@/server/db/schema/index";
-import { verifyToken } from "utils/auth";
+import { NextResponse } from 'next/server';
+import { drizzle } from 'drizzle-orm/d1';
+import * as schema from '@/server/db/schema/index';
+import { verifyToken } from 'utils/auth';
 // import { verifyUser } from "@/server/auth"; // 🔒 Import authentication function
 
-export const runtime = "edge";
+export const runtime = 'edge';
 
-// ✅ GET: Fetch all events (Public)
+interface UserData {
+  userId: string,
+  email: string,
+  username: string
+}
+
+
 export async function GET() {
   try {
     const { env } = getRequestContext();
@@ -18,93 +24,80 @@ export async function GET() {
     const eventList = await DB.select().from(schema.events);
 
     return NextResponse.json(
-      { success: true, message: "Events fetched successfully", eventList },
+      { success: true, message: 'Events fetched successfully', eventList },
       { status: 200 }
     );
   } catch (error) {
-    console.error("❌ GET Error:", error);
-    return NextResponse.json(
-      { success: false, message: "Error fetching events" },
-      { status: 500 }
-    );
+    console.error('❌ GET Error:', error);
+    return NextResponse.json({ success: false, message: 'Error fetching events' }, { status: 500 });
   }
 }
 
-  // ✅ POST: Create a new event (Only Authenticated Users)
-  export async function POST(req: NextRequest) {
-    try {
-      const { env } = getRequestContext();
-      const DB = drizzle(env.DB, { schema });
-      
-      // Extract token from cookies
-      const token = req.cookies.get('accessToken')?.value ?? '';
-  
-      // Verify user token
-      const getUserData = await verifyToken(token);
-      if (!getUserData) {
-        return NextResponse.json(
-          { success: false, message: "Unauthorized" },
-          { status: 401 }
-        );
-      }
-  
-      // Parse request body
-      const {
+export async function POST(req: NextRequest) {
+  try {
+    const { env } = getRequestContext();
+    const DB = drizzle(env.DB, { schema });
+
+    const token = req.cookies.get('accessToken')?.value ?? '';
+
+    // Verify user token
+    const getUserData: UserData = await verifyToken(token);
+    if (!getUserData || !getUserData.userId) {
+      return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Parse request body
+    const {
+      title,
+      description,
+      date,
+      location,
+      price,
+      categoryId,
+      channelId,
+    }: {
+      title: string;
+      description: string;
+      date: string | number;
+      location: string;
+      price: number;
+      categoryId: string;
+      channelId: string;
+    } = await req.json();
+
+    // Validate required fields
+    if (!title || !date || !location || !price) {
+      return NextResponse.json(
+        { success: false, message: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    const timestamp = new Date(date);
+
+    // Insert event into database
+    const [newEvent] = await DB.insert(schema.events)
+      .values({
         title,
         description,
-        date,
+        date: timestamp,
         location,
         price,
         categoryId,
+        organiserId: getUserData.userId, // 🔥 Use verified userId
         channelId,
-      }: { 
-        title: string;
-        description: string;
-        date: string | number;
-        location: string;
-        price: number;
-        categoryId: string;
-        channelId: string;
-        
-      } = await req.json();
-  
-      // Validate required fields
-      if (!title || !date || !location || !price) {
-        return NextResponse.json(
-          { success: false, message: "Missing required fields" },
-          { status: 400 }
-        );
-      }
+      })
+      .returning();
 
-const timestamp = new Date(date);
-  
-      // Insert event into database
-      const [newEvent] = await DB.insert(schema.events)
-        .values({
-          title,
-          description,
-          date: timestamp,
-          location,
-          price,
-          categoryId,
-          organiserId: getUserData.userId, // 🔥 Use verified userId
-          channelId,
-        })
-        .returning();
-  
-      return NextResponse.json(
-        { success: true, message: "Event created successfully", event: newEvent },
-        { status: 201 }
-      );
-    } catch (error) {
-      console.error("❌ POST Error:", error);
-      return NextResponse.json(
-        { success: false, message: "Error creating event" },
-        { status: 500 }
-      );
-    }
+    return NextResponse.json(
+      { success: true, message: 'Event created successfully', event: newEvent },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error('❌ POST Error:', error);
+    return NextResponse.json({ success: false, message: 'Error creating event' }, { status: 500 });
   }
-  
+}
 
 // ✅ PUT: Update an event (Only Authenticated User & Own Event)
 // export async function PUT(req: Request) {
@@ -203,7 +196,7 @@ const timestamp = new Date(date);
 //   }
 // }
 
-// 
+//
 // import { NextResponse } from "next/server";
 // import { Resend } from "resend";
 

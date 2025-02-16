@@ -9,6 +9,11 @@ import {  verifyToken } from 'utils/auth';
 
 export const runtime = 'edge';
 
+interface UserData {
+    userId: string,
+    email: string,
+    username: string
+}
 
 export async function GET(req: NextRequest) {
   try {
@@ -16,7 +21,12 @@ export async function GET(req: NextRequest) {
     const DB = drizzle(env.DB, { schema });
     const token = req.cookies.get('accessToken')?.value ?? '';
 
-    const getUserData = await verifyToken(token)
+    const getUserData: UserData = await verifyToken(token);
+
+    if (!getUserData || !getUserData.email) {
+        return NextResponse.json({ success: false, message: 'Invalid token' }, { status: 401 });
+      }
+      
     const userRecord = await DB.select().from(users).where(eq(users.email, getUserData.email));
 
     if (!userRecord || userRecord.length === 0) {

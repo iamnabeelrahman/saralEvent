@@ -8,11 +8,19 @@ import axios from 'axios';
 
 interface User {
   fullName: string;
+  username: string;
   role: string;
+  profileImage: string;
+}
+
+interface UserProfileProps {
+  params: {
+    username: string;
+  };
 }
 
 const Profile = () => {
-  const [user, setUser] = useState<User>({ fullName: '', role: '' });
+  const [user, setUser] = useState<User>({ fullName: '', username: '', role: '', profileImage: '' });
 
   // const [isLoading, setIsLoading] = useState(true);
   // const [token, setToken] = useState<string | null>(null);
