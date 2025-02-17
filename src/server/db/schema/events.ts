@@ -6,6 +6,7 @@
   export const events = sqliteTable("events", {
     id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()), 
     title: text("title").notNull(),
+    eventImage: text("event_image"),
     description: text("description"),
     date: integer('date', { mode: "timestamp" }).notNull(),
     location: text('location').notNull(),
