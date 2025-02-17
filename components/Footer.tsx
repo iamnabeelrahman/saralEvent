@@ -70,15 +70,15 @@ function Footer() {
                 <strong className="font-medium">Contact Us</strong>
                 <ul className="mt-2 sm:mt-4 space-y-1">
                   <li className="text-gray-400 flex justify-center sm:justify-start">
-                    <span className="font-medium mr-2">Email:</span>
+                    <span className="font-medium mr-1">Email:</span>
                     <span>events@saralgroups.com</span>
                   </li>
                   <li className="text-gray-400 flex justify-center sm:justify-start">
-                    <span className="font-medium mr-2">Phone:</span>
+                    <span className="font-medium mr-1">Phone:</span>
                     <span>+91 78272 16955</span>
                   </li>
                   <li className="text-gray-400 flex justify-center sm:justify-start">
-                    <span className="font-medium mr-2">Headquarters:</span>
+                    <span className="font-medium mr-1">Headquarters:</span>
                     <span>Bengaluru, Karnataka</span>
                   </li>
                 </ul>
