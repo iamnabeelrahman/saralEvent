@@ -46,7 +46,7 @@ const EventDetails = ({ event }:EventDetailsProps) => {
       {/* Event Image */}
       <div className="flex justify-center items-center">
         <Image
-          src={event.eventImage || "/default-image.jpg"}
+          src={event.eventImage ?? "/default-image.jpg"}
           alt="Event image"
           width={350}
           height={350}
@@ -62,7 +62,7 @@ const EventDetails = ({ event }:EventDetailsProps) => {
         {/* Event Description */}
         <div>
           <h3 className="text-gray-700 text-lg font-medium mb-2">Event Description</h3>
-          <p className="text-gray-500 leading-relaxed">{event.description || "No description available"}</p>
+          <p className="text-gray-500 leading-relaxed">{event.description ??"No description available"}</p>
         </div>
 
         {/* Ticket Price */}
