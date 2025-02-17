@@ -1,21 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="300" height="100" viewBox="0 0 300 100" fill="none">
-  <style>
-    .text {
-      font-size: 2rem; /* Base font size */
-      font-weight: bold;
-      fill: #6B46C1; /* Purple color */
-      transition: fill 0.3s ease; /* Smooth color transition */
-    }
-    .text:hover {
-      fill: #4F46E5; /* Indigo color on hover */
-    }
-    @media (min-width: 768px) {
-      .text {
-        font-size: 3rem; /* Larger font size for medium screens */
-      }
-    }
-  </style>
-  <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" class="text">
+<svg
+  width="400"
+  height="100"
+  viewBox="0 0 200 50"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <text
+    x="10"
+    y="35"
+    font-family="Arial, sans-serif"
+    font-size="32"
+    font-weight="bold"
+    fill="url(#gradient)"
+  >
     Saral Events
   </text>
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#9333ea" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+  </defs>
 </svg>
