@@ -2,6 +2,7 @@
 import axios from 'axios';
 import CategoryList from 'components/CategoryList';
 import EventList from 'components/EventList';
+import Footer from 'components/Footer';
 import Slider from 'components/Slider';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -115,6 +116,7 @@ export default function Home() {
   
 
   return (
+    <>
     <div className="px-4 md:px-14 md:pt-10">
       <Slider sliderList={sliderList} />
       <CategoryList categoryList={categoryList} />
@@ -130,5 +132,7 @@ export default function Home() {
         />
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
