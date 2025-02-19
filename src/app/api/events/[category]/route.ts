@@ -6,39 +6,52 @@ import { drizzle } from 'drizzle-orm/d1';
 import * as schema from '@/server/db/schema/index';
 import { verifyToken } from 'utils/auth';
 
-export const runtime = 'edge'
+export const runtime = 'edge';
 
 export async function GET(req: NextRequest, { params }: { params: { category: string } }) {
-    try {
+  try {
     const { env } = getRequestContext();
     const DB = drizzle(env.DB, { schema });
 
     const categoryName = params.category;
-    
+
     // Fetch category ID by name
-    const categoryData = await DB.select().from(schema.categories).where(eq(schema.categories.name, categoryName));
+    const categoryData = await DB.select()
+      .from(schema.categories)
+      .where(eq(schema.categories.name, categoryName));
     if (!categoryData.length) {
-        return NextResponse.json({ success: false, message: 'Category not found' }, { status: 404 });
+      return NextResponse.json({ success: false, message: 'Category not found' }, { status: 404 });
     }
 
     const categoryId = categoryData[0]?.id;
     if (!categoryId) {
-        return NextResponse.json({ success: false, message: 'Category ID not found' }, { status: 404 });
+      return NextResponse.json(
+        { success: false, message: 'Category ID not found' },
+        { status: 404 }
+      );
     }
 
-    console.log("run successsfully");
-    
-    
+    console.log('run successsfully');
+
     // Fetch events with related data
-    const eventList = await DB
-      .select()
+    const eventList = await DB.select()
       .from(schema.events)
       .leftJoin(schema.users, eq(schema.events.organiserId, schema.users.id))
       .leftJoin(schema.channels, eq(schema.events.channelId, schema.channels.id))
       .where(eq(schema.events.categoryId, categoryId));
 
-      return NextResponse.json({ success: true, message: 'Data fetched successfully', eventList  }, { status: 200 });
-  } catch (error:any) {
-    return NextResponse.json({ success: false, message: 'Internal server error', error: error.message  }, { status: 500 });
+    return NextResponse.json(
+      { success: true, message: 'Data fetched successfully', eventList },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    let errorMessage = 'An unknown error occurred';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    return NextResponse.json(
+      { success: false, message: 'Internal server error', error: errorMessage },
+      { status: 500 }
+    );
   }
 }

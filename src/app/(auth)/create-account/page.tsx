@@ -15,7 +15,16 @@ interface SignUpResponse {
   success: boolean;
   message?: string;
 }
-
+interface SignUpPayload {
+  email: string;
+  username: string;
+  password: string;
+  fullName: string;
+  bio: string;
+  role: 'organiser' | 'general';
+  organiserName?: string;
+  organiserDescription?: string;
+}
 const Page = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -39,7 +48,7 @@ const Page = () => {
   const onCreateAccount = async () => {
     setLoader(true);
     try {
-      const payload: any = {
+      const payload: SignUpPayload = {
         email,
         username,
         password,
@@ -67,10 +76,10 @@ const Page = () => {
       const data: SignUpResponse = await response.json();
 
       if (response.ok) {
-        toast(data.message || 'Account created successfully');
+        toast(data.message ?? 'Account created successfully');
         router.push('/');
       } else {
-        toast(data.message || 'An error occurred');
+        toast(data.message ?? 'An error occurred');
       }
     } catch (error) {
       console.error(error);

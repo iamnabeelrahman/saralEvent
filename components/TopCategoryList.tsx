@@ -2,7 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-function TopCategoryList({ categoryList }) {
+interface Category {
+  name: string;
+  icon: {
+    url: string;
+  };
+}
+
+interface TopCategoryListProps {
+  categoryList: Category[];
+}
+
+function TopCategoryList({ categoryList }: TopCategoryListProps) {
   return (
     <div className=" mt-2 mx-7 md:mx-20">
       <div className="flex gap-5 justify-center overflow-x-auto overflow-y-hidden">

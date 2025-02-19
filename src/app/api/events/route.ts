@@ -10,11 +10,10 @@ import { verifyToken } from 'utils/auth';
 export const runtime = 'edge';
 
 interface UserData {
-  userId: string,
-  email: string,
-  username: string
+  userId: string;
+  email: string;
+  username: string;
 }
-
 
 export async function GET() {
   try {
@@ -27,9 +26,14 @@ export async function GET() {
       { success: true, message: 'Events fetched successfully', eventList },
       { status: 200 }
     );
-  } catch (error) {
-    console.error('❌ GET Error:', error);
-    return NextResponse.json({ success: false, message: 'Error fetching events' }, { status: 500 });
+  } catch (error: unknown) {
+    let errorMessage = 'Error fetching events';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    console.error('❌ GET Error:', errorMessage);
+
+    return NextResponse.json({ success: false, message: errorMessage }, { status: 500 });
   }
 }
 
@@ -93,9 +97,14 @@ export async function POST(req: NextRequest) {
       { success: true, message: 'Event created successfully', event: newEvent },
       { status: 201 }
     );
-  } catch (error) {
-    console.error('❌ POST Error:', error);
-    return NextResponse.json({ success: false, message: 'Error creating event' }, { status: 500 });
+  } catch (error: unknown) {
+    let errorMessage = 'Error creating event';
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    console.error('❌ POST Error:', errorMessage);
+
+    return NextResponse.json({ success: false, message: errorMessage }, { status: 500 });
   }
 }
 

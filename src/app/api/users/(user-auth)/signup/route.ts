@@ -13,25 +13,19 @@ export const runtime = 'edge';
 // Signup API Handler
 export async function POST(req: Request) {
   try {
-    const {
-      email,
-      username,
-      password,
-      fullName,
-      bio,
-      role,
-      organiserName,
-      organiserDescription,
-    }: { 
-      email: string; 
-      username: string; 
-      password: string; 
-      fullName: string; 
-      bio: string; 
-      role: "general" | "organiser"; 
+    const body = await req.json() as {
+      email: string;
+      username: string;
+      password: string;
+      fullName: string;
+      bio: string;
+      role: "general" | "organiser";
       organiserName?: string;
       organiserDescription?: string;
-    } = await req.json();
+    };
+    
+    const { email, username, password, fullName, bio, role, organiserName, organiserDescription } = body;
+    
 
     // Basic validation
     if (!email || !username || !password || !fullName) {
@@ -51,7 +45,16 @@ export async function POST(req: Request) {
     const hashedPassword = await hashPassword(password);
 
     // Handle organiser-specific fields
-    const userData: any = {
+    const userData: {
+      email: string;
+      username: string;
+      fullName: string;
+      bio: string;
+      role: "general" | "organiser";
+      password: string;
+      organiserName?: string;
+      organiserDescription?: string;
+    } = {
       email,
       username,
       fullName,
