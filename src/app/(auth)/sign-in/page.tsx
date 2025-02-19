@@ -64,7 +64,7 @@ const SignInPage = () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("token", data.user.accessToken); // Store the token here
         toast.success(data.message);
-        router.push("/"); // Redirect to the homepage after successful login
+        router.push("/profile"); // Redirect to the homepage after successful login
       } else {
         toast.error(data?.message || "Login failed");
       }

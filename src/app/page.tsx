@@ -5,6 +5,7 @@ import EventList from 'components/EventList';
 import Footer from 'components/Footer';
 import Slider from 'components/Slider';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export const runtime = 'edge';
@@ -122,7 +123,7 @@ export default function Home() {
       <CategoryList categoryList={categoryList} />
       <EventList eventsList={eventsList} />
 
-      <div className="mt-4 md:mt-9">
+      <Link href={"/events"} className="mt-4 md:mt-9 ">
         <Image
           src="/homebanner.png"
           alt="Banner"
@@ -130,7 +131,7 @@ export default function Home() {
           height={400}
           className="w-full h-auto md:h-[300px] object-cover rounded-lg"
         />
-      </div>
+      </Link>
     </div>
     <Footer/>
     </>

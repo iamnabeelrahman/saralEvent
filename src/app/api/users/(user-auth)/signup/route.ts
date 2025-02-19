@@ -19,39 +19,67 @@ export async function POST(req: Request) {
       password,
       fullName,
       bio,
-    }: { email: string; username: string; password: string; fullName: string; bio: string } =
-      await req.json();
+      role,
+      organiserName,
+      organiserDescription,
+    }: { 
+      email: string; 
+      username: string; 
+      password: string; 
+      fullName: string; 
+      bio: string; 
+      role: "general" | "organiser"; 
+      organiserName?: string;
+      organiserDescription?: string;
+    } = await req.json();
 
+    // Basic validation
     if (!email || !username || !password || !fullName) {
-      return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
+      return NextResponse.json({ message: "All fields are required" }, { status: 400 });
     }
 
     const { env } = getRequestContext();
-    const DB = drizzle(env.DB, {schema});
+    const DB = drizzle(env.DB);
 
     // Check if email exists
     const existingUser = await DB.select().from(users).where(eq(users.email, email));
-    console.log(existingUser);
-
     if (existingUser.length > 0) {
-      return NextResponse.json({ message: 'Email already exists' }, { status: 400 });
+      return NextResponse.json({ message: "Email already exists" }, { status: 400 });
     }
 
+    // Hash password
     const hashedPassword = await hashPassword(password);
-    await DB.insert(users).values({
+
+    // Handle organiser-specific fields
+    const userData: any = {
       email,
       username,
       fullName,
       bio,
+      role,
       password: hashedPassword,
-    });
+    };
+
+    if (role === "organiser") {
+      if (!organiserName || !organiserDescription) {
+        return NextResponse.json(
+          { message: "Organiser name and description are required for organisers" },
+          { status: 400 }
+        );
+      }
+      userData.organiserName = organiserName;
+      userData.organiserDescription = organiserDescription;
+    }
+
+    // Insert user into database
+    await DB.insert(users).values(userData);
 
     return NextResponse.json(
-      { success: true, message: 'User created successfully' },
+      { success: true, message: role === "organiser" ? "Organiser registered" : "User registered successfully" },
       { status: 201 }
     );
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Error registering user' }, { status: 500 });
+    return NextResponse.json({ message: "Error registering user" }, { status: 500 });
   }
 }

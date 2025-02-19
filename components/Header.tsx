@@ -199,8 +199,8 @@ function Header() {
 
           {!isSignedIn ? (
             <Link href={'/sign-in'}>
-              <Button className="w-10 md:w-[70px]">Login</Button>
-            </Link>
+<Button className="w-10 md:w-[80px] bg-white text-primary border border-primary">Add Event</Button>
+</Link>
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger>
