@@ -1,11 +1,22 @@
 import React from "react";
 import OrganiserLayout from "./layout";
+interface User {
+  fullName: string;
+  username: string;
+  role: string;
+  profileImage: string;
+}
 
-const OrganiserDashboard = () => {
+interface OrganiserDashboardProps {
+  user: User;
+}
+
+const OrganiserDashboard: React.FC<OrganiserDashboardProps> = ({ user }) => {
   const loggedIn = {
-    firstName: "Nabeel",
-    lastName: "Rahman",
-    email: "nabeel.r.work@gmail.com",
+    fullName: "Nabeel Rahman",
+    username: "iamnabeelrahman",
+    role: "Organiser",
+    profileImage: "/defaultProfile.jpg"
   };
 
   return (
@@ -17,7 +28,7 @@ const OrganiserDashboard = () => {
             <h1 className="text-2xl lg:text-4xl font-semibold text-gray-900">
               {"Welcome"}
 
-              <span className="text-primary">&nbsp;{loggedIn?.firstName}</span>
+              <span className="text-primary">&nbsp;{user?.fullName}</span>
             </h1>
             <p className="text-sm lg:text-xl font-normal text-gray-600">
               {"Your gateway to manage events."}
@@ -33,16 +44,16 @@ const OrganiserDashboard = () => {
           <div className="relative flex px-6">
             <div className="flex justify-center items-center absolute -top-8 w-24 h-24 rounded-full bg-gray-100 border-8 border-white p-2 shadow-profile">
               <span className="text-5xl font-bold text-primary">
-                {loggedIn.firstName[0]}
+                {user.fullName[0]}
               </span>
             </div>
 
             <div className="flex flex-col pt-24">
               <h1 className="text-2xl font-semibold text-gray-900">
-                {loggedIn.firstName} 
+                {user.fullName} 
               </h1>
               <p className="text-base font-normal text-gray-600">
-                {loggedIn.email}
+                {user.role}
               </p>
             </div>
           </div>
