@@ -13,7 +13,16 @@ export const runtime = 'edge';
 // Signup API Handler
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = await req.json() as {
+      email: string;
+      username: string;
+      password: string;
+      fullName: string;
+      bio: string;
+      role: "general" | "organiser";
+      organiserName?: string;
+      organiserDescription?: string;
+    };
     
     const { email, username, password, fullName, bio, role, organiserName, organiserDescription } = body;
     
