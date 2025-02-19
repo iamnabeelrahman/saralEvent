@@ -3,6 +3,9 @@ import React from "react";
 // import TopCategoryList from "../_components/TopCategoryList";
 // import EventList from "components/EventList";
 
+export const runtime = 'edge';
+
+
 interface EventCategoryPrps {
   params: {
     categoryName: string;

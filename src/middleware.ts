@@ -41,5 +41,5 @@ export async function middleware(req: NextRequest) {
 
 // Apply middleware to relevant routes
 export const config = {
-  matcher: ["/dashboard", "/sign-in", "/create-account"], // Protect these routes
+  matcher: ["/dashboard", "/profile" ,"/sign-in", "/create-account"], // Protect these routes
 };

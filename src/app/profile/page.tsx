@@ -15,14 +15,8 @@ interface User {
   profileImage: string;
 }
 
-
 const Profile = () => {
   const [user, setUser] = useState<User>({ fullName: '', username: '', role: '', profileImage: '' });
-
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [token, setToken] = useState<string | null>(null);
-  // const [message, setMessage] = useState('');
-
 
   useEffect(()=> {
     void  fetchUserDetails()
@@ -56,7 +50,7 @@ const Profile = () => {
         <div className="relative bg-gradient-to-r from-purple-500 to-indigo-500 p-6">
           <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 transform">
             <Image
-              src="/defaultProfile.jpg" // Replace with your image path
+              src={user.profileImage ?? "/defaultProfile.jpg"}
               width={80}
               height={80}
               className="rounded-full border-4 border-white"

@@ -42,7 +42,7 @@ interface CategoryResponse {
 
 function Header() {
   const [sliderList, setSliderList] = useState<any>([]);
-  const [categoryList, setCategoryList] = useState<Category[]>([]);  // Remove if not used.
+  const [categoryList, setCategoryList] = useState<Category[]>([]); // Remove if not used.
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [totalListItem, setTotalListItem] = useState();
   const [jwt, setJwt] = useState(null);
@@ -74,8 +74,6 @@ function Header() {
     }
   }, []);
 
-
-
   // useEffect(() => {
   //   getListItems();
   // }, [updateList, user, jwt]);
@@ -84,24 +82,20 @@ function Header() {
     void fetchCategoryData();
   }, []);
 
-  
-    const fetchCategoryData = async () => {
-      try {
-        const response = await axios.get<CategoryResponse>('/api/categories');
-        // console.log("API response:", response.data.categoryList);  // Debugging line
-        setCategoryList(response.data.categoryList);  // Set the categories data
-      } catch (error) {
-        console.error('Error fetching category data:', error);
-      }
-      // console.log("Helllo");
-    };
-
-
+  const fetchCategoryData = async () => {
+    try {
+      const response = await axios.get<CategoryResponse>('/api/categories');
+      // console.log("API response:", response.data.categoryList);  // Debugging line
+      setCategoryList(response.data.categoryList); // Set the categories data
+    } catch (error) {
+      console.error('Error fetching category data:', error);
+    }
+    // console.log("Helllo");
+  };
 
   //get items list
   const getListItems = async () => {
-    console.log(" it is list item get function");
-
+    console.log(' it is list item get function');
   };
 
   const onSignOut = () => {
@@ -110,8 +104,7 @@ function Header() {
   };
 
   const onDeleteItem = () => {
-    console.log(" it is delet function");
-    
+    console.log(' it is delet function');
   };
 
   const [subtotal, setSubtotal] = useState(0);
@@ -123,10 +116,10 @@ function Header() {
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md transition-all duration-300 ease-in-out">
-      <div className="flex p-4 shadow-sm justify-between">
-        <div className="flex items-center gap-8">
+      <div className="flex justify-between p-4 shadow-sm">
+        <div className="flex items-center gap-12">
           <Link href="/" passHref>
-            <span className="text-base md:text-3xl font-bold text-purple-600 hover:text-indigo-600 transition-colors">
+            <span className="text-base font-bold text-purple-600 transition-colors hover:text-indigo-600 md:text-3xl">
               Saral Events
             </span>
           </Link>
@@ -170,34 +163,39 @@ function Header() {
         </div>
 
         <div className="flex items-center gap-5">
-         {isSignedIn &&( <Sheet>
-            <SheetTrigger>
-              <h2 className="flex cursor-pointer items-center gap-2 text-lg">
-                <ShoppingBasket className="h-7 w-7" />
-                <span className="rounded-full bg-primary px-2 text-white">{totalListItem}</span>
-              </h2>
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle className="bg-primary p-2 text-lg font-bold text-white">
-                  My Lists
-                </SheetTitle>
-                <SheetDescription>
-                  <ListItemsDetail listItemDetails={listItemDetails} onDeleteItem={onDeleteItem} />
-                </SheetDescription>
-              </SheetHeader>
-              <SheetClose asChild>
-                <div className="absolute bottom-6 flex w-[90%] flex-col">
-                  <h2 className="flex justify-between text-lg font-bold">
-                    Subtotal <span>{subtotal}</span>
-                  </h2>
-                  <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>
-                    Checkout
-                  </Button>
-                </div>
-              </SheetClose>
-            </SheetContent>
-          </Sheet>) }
+          {isSignedIn && (
+            <Sheet>
+              <SheetTrigger>
+                <h2 className="flex cursor-pointer items-center gap-2 text-lg">
+                  <ShoppingBasket className="h-7 w-7" />
+                  <span className="rounded-full bg-primary px-2 text-white">{totalListItem}</span>
+                </h2>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle className="bg-primary p-2 text-lg font-bold text-white">
+                    My Lists
+                  </SheetTitle>
+                  <SheetDescription>
+                    <ListItemsDetail
+                      listItemDetails={listItemDetails}
+                      onDeleteItem={onDeleteItem}
+                    />
+                  </SheetDescription>
+                </SheetHeader>
+                <SheetClose asChild>
+                  <div className="absolute bottom-6 flex w-[90%] flex-col">
+                    <h2 className="flex justify-between text-lg font-bold">
+                      Subtotal <span>{subtotal}</span>
+                    </h2>
+                    <Button onClick={() => router.push(jwt ? '/checkout' : '/sign-in')}>
+                      Checkout
+                    </Button>
+                  </div>
+                </SheetClose>
+              </SheetContent>
+            </Sheet>
+          )}
 
           {!isSignedIn ? (
             <Link href={'/sign-in'}>
