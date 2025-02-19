@@ -115,5 +115,5 @@ export function checkUserSignedStatus(): boolean {
     {} as Record<string, string>
   );
 
-  return Boolean(cookies['accessToken']); // ✅ Check existence safely
+  return Boolean(cookies.accessToken); // ✅ Check existence safely
 }

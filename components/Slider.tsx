@@ -10,15 +10,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-type Slider = {
+interface Slider {
   id: number; // id of the slider
   title: string; // title of the slider
   imageUrl: string; // image URL of the slider
-};
+}
 
-type SliderProps = {
+interface SliderProps {
   sliderList: Slider[]; // Array of Slider objects
-};
+}
 
 function Slider({ sliderList }: SliderProps) {
   return (
